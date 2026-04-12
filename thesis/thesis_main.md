@@ -259,7 +259,7 @@ Not because asking will produce all the answers. But because the habit of asking
 - Kim, S. (김성문). *AI 시대와 고전문학* [The age of artificial intelligence and classical literature].
 - Russell, S. (2019). *Human compatible: Artificial intelligence and the problem of control*. Viking.
 - Searle, J. R. (1980). Minds, brains, and programs. *Behavioral and Brain Sciences, 3*(3), 417–424.
-- Shermer, M. (2014). The pattern-seeking brain. NPR TED Radio Hour.
+- Shermer, M. (2014). The believing brain. Times Books.
 - Turing, A. M. (1950). Computing machinery and intelligence. *Mind, 59*(236), 433–460.
 
 
