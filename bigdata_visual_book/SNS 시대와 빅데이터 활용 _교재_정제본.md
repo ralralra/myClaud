@@ -949,3 +949,665 @@ AI 윤리가 사회적 논의에 머무르지 않고 실제로 작동하기 위�
 5. 자율주행 차량이 사고를 피할 수 없을 때, 어떤 판단 기준이 가장 합리적이라고 생각하는가? 그 이유는?
 
 ---
+
+# 제4부. 실습: Gemini로 요리하는 데이터
+
+이론은 충분히 살펴봤다. 이제 실제 데이터를 손으로 만져 볼 차례다. 4부에서는 **Google Colab**과 **Gemini**(또는 Claude·GPT)를 활용해 다음 세 가지 실습을 진행한다.
+
+1. **공공데이터 다루기** — 기상청 기온 데이터로 ‘체감 기후 변화’를 직접 그려 보기
+2. **타이타닉 분석** — 영화 ⟪타이타닉⟫ 속 “여성과 어린이 우선”이 사실인지 데이터로 검증
+3. **지도 시각화** — Folium으로 만드는 인터랙티브 지도와 공공데이터 매핑
+
+---
+
+## 제7장. 데이터 분석을 위한 마중물 + 환경 설정
+
+> ### 핵심 질문
+> **“어디에서 데이터를 구하고, 어떤 도구로 다루어야 할까?”**
+
+### 학습 목표
+
+1. 산업별로 활용되는 빅데이터 사례를 이해한다.
+2. 공공데이터 포털에서 데이터를 검색·다운로드할 수 있다.
+3. Google Colab 환경을 설정하고, 기본 라이브러리를 임포트할 수 있다.
+4. CSV 파일의 인코딩 문제를 해결하는 방법을 이해한다.
+
+### 핵심 키워드
+
+`산업별 빅데이터` · `공공데이터 포털` · `data.go.kr` · `Google Colab` · `pandas` · `numpy` · `matplotlib` · `seaborn` · `chardet` · `EUC-KR/UTF-8`
+
+---
+
+### 7.1 산업별로 데이터는 어떻게 쓰이고 있는가
+
+빅데이터는 산업마다 다른 얼굴로 쓰인다. 같은 ‘데이터 분석’이라는 이름을 달고 있어도, **목적과 활용 방식**이 다르다.
+
+| 분야 | 활용 사례 | 사용되는 데이터 |
+| :--- | :--- | :--- |
+| **의료** | AI 진단 보조, 신약 개발, 개인 맞춤 치료 | 전자의무기록(EMR), CT/MRI 영상, 웨어러블 |
+| **기상·재난** | 폭염·태풍 예측, 가뭄 경보, 미세먼지 알림 | 기온·강수·풍속 시계열, 위성 영상 |
+| **교통** | 빠른 길 안내, 자율주행, 신호 최적화 | GPS 로그, 카메라·라이다, 교통량 센서 |
+| **금융** | 사기 탐지, 신용 평가, 로보 어드바이저 | 거래 로그, 신용 이력, 시장 데이터 |
+| **유통·쇼핑** | 추천 시스템, 수요 예측, 로켓 배송 | 클릭 스트림, 구매 이력, 재고 |
+| **공공행정** | 인구 정책, 스마트 시티, 민원 분석 | 인구·세무·민원·교통 통계 |
+
+이 책의 실습에서는 **누구나 무료로 받을 수 있는 공공데이터**를 사용한다.
+
+---
+
+### 7.2 공공데이터 이해하기
+
+#### 공공데이터란
+
+**공공데이터**란 공공기관이 만들거나 보유한 자료를 누구나 활용할 수 있도록 개방한 데이터를 말한다. 기상·교통·의료·복지·교육 등 사회 전반의 통계가 포함된다. 한국의 대표 창구는 **공공데이터 포털(data.go.kr)**이다.
+
+| 활용 영역 | 효과 |
+| :--- | :--- |
+| 사회 문제 해결 | 폭염·재난·교통 혼잡 등 정책 의사결정 지원 |
+| 행정 효율화 | 민원·세무·복지 데이터 자동 분석 |
+| 창업·연구 | 스타트업·논문·앱 서비스의 데이터 기반 |
+
+#### 데이터 포털에서 받기
+
+1. **공공데이터 포털(data.go.kr)** 접속 → 검색창에 키워드 입력
+2. 파일 형식 확인 (`CSV`, `XLS`, `JSON`)
+3. 다운로드 → Google Drive 업로드 → Colab에서 마운트
+
+> 📌 **인코딩 문제**: 한국어 데이터는 종종 `EUC-KR`로 저장되어 있다. 그대로 열면 글자가 깨진다. `chardet` 라이브러리로 인코딩을 감지하면 안전하다.
+
+---
+
+### 7.3 Google Colab 환경 설정
+
+**Google Colab**은 별도 설치 없이 브라우저에서 파이썬을 실행할 수 있는 무료 클라우드 환경이다. **GPU/TPU**도 무료 한도 내에서 사용할 수 있어 머신러닝·데이터 분석 입문에 가장 적합하다.
+
+#### 첫 코드: 라이브러리 임포트
+
+```python
+# 데이터 분석 기본 4종 세트
+import numpy as np                # 수치 계산 (배열·벡터 연산)
+import pandas as pd               # 데이터프레임 (엑셀 같은 표 다루기)
+import matplotlib.pyplot as plt   # 기본 그래프
+import seaborn as sns             # 통계 시각화 (matplotlib 기반)
+
+# Jupyter/Colab에서 그래프 바로 출력
+%matplotlib inline
+```
+
+| 라이브러리 | 한 줄 설명 |
+| :--- | :--- |
+| **numpy** | 배열(Array) 연산에 특화된 과학 계산 도구 |
+| **pandas** | 엑셀 같은 DataFrame 제공, 데이터 전처리 핵심 |
+| **matplotlib** | 파이썬 표준 그래프 라이브러리 (`pyplot`) |
+| **seaborn** | matplotlib 기반의 더 예쁜 통계 시각화 |
+
+#### Google Drive 마운트
+
+```python
+from google.colab import drive
+drive.mount('/content/drive')
+
+# 파일 읽기 예시
+df = pd.read_csv('/content/drive/MyDrive/data/temperature.csv')
+df.head()
+```
+
+> 📌 **Tip — `FileNotFoundError`가 자주 발생합니다.** 파일 경로의 띄어쓰기·대소문자·확장자(.csv vs .CSV)를 정확히 확인하세요.
+
+---
+
+## 제8장. Gemini와 함께 — 프롬프트 전략과 데이터 시각화 실습
+
+> ### 핵심 질문
+> **“AI에게 ‘분석을 맡긴다’는 건 어떻게 질문하고, 어떻게 결과를 검증하는 일인가?”**
+
+### 학습 목표
+
+1. 데이터 분석 프롬프트를 단계적으로 작성할 수 있다.
+2. 기상청 기온 데이터로 평균·특정 일자·미래 예측 그래프를 그릴 수 있다.
+3. 타이타닉 데이터를 EDA(탐색적 데이터 분석)로 살펴본다.
+4. 의사결정나무 모델로 생존자를 예측하고, 결과를 해석한다.
+
+### 핵심 키워드
+
+`프롬프트 엔지니어링` · `EDA` · `결측치` · `상관계수` · `히트맵` · `feature engineering` · `데이터 누수` · `train/test split` · `Decision Tree` · `accuracy`
+
+---
+
+### 8.1 Gemini 프롬프트 전략: ‘질문’이 분석의 절반이다
+
+생성형 AI는 코드를 대신 작성해 주지만, **무엇을 물을지 정하는 것은 사람의 몫**이다. 분석용 프롬프트는 다음 6요소를 포함하는 것이 좋다.
+
+| 요소 | 예시 |
+| :--- | :--- |
+| **역할** | “너는 파이썬 데이터 분석가야” |
+| **목적** | “기온 데이터에서 장기 추세를 알고 싶어” |
+| **데이터 정보** | “CSV, 컬럼은 date·avg_temp 두 개” |
+| **요구 사항** | “1) 결측치 확인 2) 연도별 평균 그래프” |
+| **제약 조건** | “외부 라이브러리는 pandas·matplotlib만” |
+| **출력 형식** | “코드 → 실행 결과 → 한 줄 해석” |
+
+#### 프롬프트 템플릿 (3단계)
+
+```
+[1단계] 너는 파이썬 데이터 분석가야. 다음 작업을 해줘.
+
+[2단계] 데이터: {파일 경로 / 컬럼 / 행수}
+요구: 1. 결측치 처리
+      2. 평균 기온 시계열 그래프
+      3. 분석 결과를 3줄로 요약
+
+[3단계] 출력 형식:
+- 코드는 ```python ... ``` 블록 안에
+- 그래프 제목·축 라벨은 한국어로
+- 마지막에 “이 데이터로 알 수 있는 것” 3줄 요약
+```
+
+| 📌 **읽을거리 — AI를 잘 쓰는 사람의 공통점** |
+| :---- |
+| AI가 만들어 준 코드를 그대로 돌리는 사람과, **결과를 검증하는 사람** 사이의 차이는 점점 커진다. AI는 그럴듯한 코드를 빠르게 만들지만, **데이터에 맞지 않는 컬럼명**을 그대로 쓰거나, **결측치를 무시**하거나, **잘못된 통계 해석**을 종종 한다. ‘AI가 짠 코드도 사람이 한 번 더 본다’는 원칙이 데이터 리터러시의 핵심이다. |
+
+---
+
+### 8.2 기온 데이터 시각화
+
+#### 데이터 준비 (기상청 ASOS 일자료)
+
+기상청 기상자료개방포털(`data.kma.go.kr`)에서 1904년부터의 일별 기온 데이터를 무료로 받을 수 있다. 우리는 ‘**서울**’ 관측소의 일평균 기온 시계열을 사용한다.
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('/content/drive/MyDrive/data/seoul_temp.csv',
+                 encoding='euc-kr')
+df.columns = ['date', 'avg_temp']          # 컬럼명 단순화
+df['date'] = pd.to_datetime(df['date'])    # 날짜 타입 변환
+df = df.dropna(subset=['avg_temp'])        # 결측치 제거
+df.head()
+```
+
+#### ① 연도별 평균 기온 변화
+
+```python
+df['year'] = df['date'].dt.year
+yearly = df.groupby('year')['avg_temp'].mean()
+
+plt.figure(figsize=(12, 5))
+yearly.plot(color='tomato')
+plt.title('서울 연도별 평균 기온 (1907~)')
+plt.xlabel('연도'); plt.ylabel('평균 기온(℃)')
+plt.grid(alpha=0.3)
+plt.show()
+```
+
+> **무엇이 보이나?** — 100년이 넘는 시계열에서 우상향(↑) 곡선이 뚜렷하다. **‘기온이 오르고 있다’**는 사실이 단순한 통계 표가 아닌, 한 장의 선그래프로 드러나는 순간이다.
+
+#### ② 특정 날짜의 기온은 어떻게 변해 왔는가
+
+```python
+df['month'] = df['date'].dt.month
+df['day']   = df['date'].dt.day
+
+# 매년 8월 15일 기온
+aug15 = df[(df['month'] == 8) & (df['day'] == 15)]
+plt.scatter(aug15['year'], aug15['avg_temp'])
+plt.title('매년 8월 15일 평균 기온 변화')
+plt.show()
+```
+
+#### ③ 10년 뒤 기온 예측 (선형 회귀)
+
+```python
+from sklearn.linear_model import LinearRegression
+import numpy as np
+
+X = yearly.index.values.reshape(-1, 1)   # 연도
+y = yearly.values                        # 평균 기온
+
+model = LinearRegression().fit(X, y)
+
+future = np.arange(yearly.index.max()+1, yearly.index.max()+11).reshape(-1,1)
+pred = model.predict(future)
+print(pd.DataFrame({'year': future.flatten(), 'pred_temp': pred.round(2)}))
+```
+
+> 📌 **주의** — 선형 회귀 한 줄로 미래를 예측하는 것은 **참고용**일 뿐이다. 실제 기후 모델은 수십 가지 변수와 비선형 관계를 함께 다룬다. ‘**모델은 답이 아니라 가설**’임을 잊지 말자.
+
+---
+
+### 8.3 영화 ⟪타이타닉⟫의 이야기는 사실과 같을까
+
+> **“선원들이 ‘여자와 아이들 먼저!’를 외치며 구명보트에 태웠다.”** <br>
+> **“1등석 승객은 여유롭게 보트에 올랐고, 3등석은 갑판으로 나가지 못했다.”**
+>
+> 영화 속 두 장면이 **실제 데이터에서도 같은 패턴**으로 나타날까?
+
+이 절에서는 1,309명의 실제 탑승객 데이터를 분석하고, 머신러닝으로 잭(Jack)과 로즈(Rose)의 생존 여부를 직접 예측한다.
+
+#### Step 1 — 데이터 로드 & 기본 정보
+
+```python
+data = pd.read_excel('/content/drive/MyDrive/data/titanic.xls')
+data.info()
+data.describe()
+```
+
+| 컬럼 | 의미 | 결측 |
+| :--- | :--- | :--- |
+| pclass | 객실 등급 (1·2·3) | 0 |
+| survived | 생존 여부 (0/1) | 0 |
+| age | 나이 | 263명 결측 |
+| sex | 성별 | 0 |
+| sibsp / parch | 형제·배우자 / 부모·자녀 동승 수 | 0 |
+| fare | 요금 | 일부 결측 |
+| boat | 구명보트 번호 | 대부분 결측 |
+
+#### Step 2 — 전체 생존률
+
+```python
+print(f"평균 생존률: {data['survived'].mean():.1%}")
+data['survived'].value_counts().plot.pie(autopct='%.1f%%')
+```
+
+> 1,309명 중 **약 38.2%**가 생존. 10명 중 4명만 살아남은 비극이다.
+
+#### Step 3 — 등급별 / 성별 / 나이별 생존률
+
+```python
+# 등급별
+data.groupby('pclass')['survived'].mean()
+# 1등실: 61.9% / 2등실: 42.9% / 3등실: 25.5%
+
+# 성별
+data.groupby('sex')['survived'].mean()
+# female: 74% / male: 19%
+
+# 나이 구간별
+bins = [0, 3, 7, 15, 30, 60, 100]
+labels = ['baby','children','teenage','young','adult','old']
+data['age_cat'] = pd.cut(data['age'], bins=bins, labels=labels)
+data.groupby('age_cat')['survived'].mean()
+```
+
+| 발견 | 수치 |
+| :--- | :--- |
+| 1등실 생존률 | **61.9%** (3등실의 2배 이상) |
+| 여성 생존률 | **74%** (남성의 4배) |
+| 유아(0~3세) 생존률 | 매우 높음 (3등실이라도) |
+
+> **결론**: 영화 속 “여성과 어린이 우선”과 “상류층 우대”는 **데이터 통계와 정확히 일치한다.**
+
+#### Step 4 — 상관계수 히트맵
+
+```python
+import numpy as np
+num_corr = data.select_dtypes(include=np.number).corr()
+
+plt.figure(figsize=(10, 10))
+sns.heatmap(num_corr, annot=True, cmap='BuPu', square=True)
+```
+
+| 관계 | 상관계수 | 해석 |
+| :--- | :---: | :--- |
+| pclass ↔ fare | **−0.55** | 등급 숫자가 클수록(3등실) 요금은 낮다 |
+| survived ↔ pclass | **−0.34** | 등급 숫자가 클수록 생존률이 낮다 |
+| survived ↔ fare | +0.24 | 비싼 요금일수록 생존률이 높다 |
+
+#### Step 5 — Feature Engineering: 이름에서 ‘호칭’ 뽑기
+
+```python
+data['title'] = data['name'].map(
+    lambda x: x.split(',')[1].split('.')[0].strip()
+)
+rare = ['Lady','Countess','Capt','Col','Don','Dr','Major','Rev','Sir','Jonkheer','Dona']
+data['title'] = data['title'].replace(rare, 'Rare')
+data['title'] = data['title'].replace(['Mlle','Ms'], 'Miss')
+
+data.groupby('title')['survived'].mean().sort_values()
+# Mr: 16.2% / Master: 57.5% / Miss: 67.8% / Rare: 44% / Mrs: 79.2%
+```
+
+| 📌 **읽을거리 — 데이터 누수(Data Leakage)** |
+| :---- |
+| `boat` 열(구명보트 번호)은 **결과를 미리 알려 주는 정보**다. 이 열로 학습하면 모델 정확도가 98%로 치솟지만, 실제 ‘침몰 직전’ 시점에는 알 수 없는 정보다. **학습에서는 반드시 제외**해야 한다. 이런 함정을 ‘**데이터 누수(Data Leakage)**’라고 한다. |
+
+#### Step 6 — 의사결정나무로 생존 예측
+
+```python
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+# 1) 전처리 — 성별 숫자화, 결측 행 제거
+data['sex'] = data['sex'].map({'female':0, 'male':1})
+data = data.dropna(subset=['age','fare','sibsp','parch','sex'])
+
+features = ['pclass','sex','age','sibsp','parch','fare']
+X = data[features]
+y = data['survived']
+
+# 2) 학습/평가 분할 (90/10)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.1, random_state=13)
+
+# 3) 의사결정나무 (깊이 3)
+tree = DecisionTreeClassifier(max_depth=3, random_state=13).fit(X_tr, y_tr)
+
+# 4) 정확도
+acc = accuracy_score(y_te, tree.predict(X_te))
+print(f'Test Accuracy: {acc*100:.2f}%')   # 약 82%
+```
+
+#### Step 7 — 잭과 로즈의 운명
+
+```python
+# [pclass, sex, age, sibsp, parch, fare]
+Jack = [3, 1, 19,  0, 0,   5.0]   # 3등실, 남성, 19세
+Rose = [1, 0, 17,  1, 1, 100.0]   # 1등실, 여성, 17세
+
+for name, p in [('Jack', Jack), ('Rose', Rose)]:
+    prob = tree.predict_proba([p])[0]
+    fate = 'Survived' if prob[1] > 0.5 else 'Dead'
+    print(f'{name}: {fate} (확률 {max(prob)*100:.1f}%)')
+
+# Jack: Dead     (약 86.5% 사망 예측)
+# Rose: Survived (약 96.2% 생존 예측)
+```
+
+> **데이터는 거짓말을 하지 않는다.**
+> 영화의 결말은 1912년 사회 구조와 일치한다. 3등실 남성 잭은 데이터상 매우 낮은 생존 확률을, 1등실 여성 로즈는 매우 높은 생존 확률을 갖는다.
+
+| 🛠 **활동 8-1 — 나의 생존 확률** |
+| :---- |
+| 다음 정보를 모델에 넣어 ‘만약 내가 그 배에 탔다면’의 생존 확률을 계산해 보자. <br>① 객실 등급(1·2·3 중 선택) ② 성별 ③ 나이 ④ 가족 동승 수 ⑤ 요금(달러) <br>결과를 보고 ‘**왜 그 결과가 나왔는가**’를 두 문장으로 설명한다. |
+
+| 🧠 **토론 질문** |
+| :---- |
+| · 우리가 만든 모델 정확도 82%는 충분한가? 어떤 상황에서 부족할 수 있을까? <br>· `boat` 열을 학습에 넣으면 정확도 98%가 된다. 왜 그래도 사용하면 안 되는가? <br>· 모델이 “3등실 + 남성”을 일관되게 사망으로 예측하는 것은 **공정한가**? AI 윤리 4대 쟁점 중 무엇과 연결되는가? |
+
+---
+
+## 제9장. 분석 결과의 공유 — 웹 시각화 (Folium)
+
+> ### 핵심 질문
+> **“카카오 ‘내 위치 보내기’와 분석가의 지도는, 같은 원리로 작동한다.”**
+
+### 학습 목표
+
+1. 위도(Latitude)·경도(Longitude) 좌표계의 기본 원리를 이해한다.
+2. Folium으로 지도를 생성하고 마커·팝업·툴팁을 추가할 수 있다.
+3. HTML 파일로 저장해 누구나 볼 수 있게 공유한다.
+4. 공공데이터(보훈병원 CSV)를 지도에 시각화해 본다.
+
+### 핵심 키워드
+
+`위도/경도` · `Folium` · `Leaflet.js` · `Map / Marker / Popup` · `Icon color` · `tiles` · `CircleMarker` · `MarkerCluster` · `Choropleth` · `iterrows()`
+
+---
+
+### 9.1 위도와 경도: 지구 위 모든 점의 주소
+
+#### 좌표계 한 장 정리
+
+| 구분 | 기준 | 값의 범위 |
+| :--- | :--- | :--- |
+| **위도(Latitude)** | 적도(0°) 기준 남(S)/북(N) | −90° ~ +90° |
+| **경도(Longitude)** | 본초자오선(그리니치) 기준 동(E)/서(W) | −180° ~ +180° |
+
+> **위도 1° ≈ 약 111 km**
+
+#### 한반도 좌표 범위
+
+- 위도 **33°~43° N** (마라도 ~ 온성)
+- 경도 **124°~132° E** (마안도 ~ 독도)
+- 우리나라 표준시는 동경 **135°(GMT+9)** 기준
+
+> 📌 **좌표 표기 순서 — `(위도, 경도)`**. Folium도 `(lat, lon)` 순서를 따른다.
+
+| 📌 **읽을거리 — 카카오 ‘내 위치 보내기’의 원리** |
+| :---- |
+| 친구에게 카카오톡으로 ‘내 위치 보내기’를 누르면, 스마트폰의 GPS가 **위도·경도 두 숫자**를 읽어 서버에 전송한다. 받은 친구는 그 두 숫자를 지도(예: Daum/Naver Maps)의 좌표에 찍어서 마커로 보게 된다. **즉, 위치 공유 = 두 숫자의 전송 + 지도 위 점 찍기**다. Folium 실습은 정확히 이 흐름을 직접 만드는 것이다. |
+
+---
+
+### 9.2 Folium 라이브러리: 한 줄로 인터랙티브 지도
+
+**Folium**은 파이썬 데이터를 받아 **JavaScript 기반 Leaflet.js 지도**로 변환해 주는 라이브러리다. 결과는 HTML 파일로 저장되어 어떤 브라우저에서든 열린다.
+
+```python
+!pip install folium
+import folium
+```
+
+#### 실습 ① — 첫 지도 띄우기 (서울시청)
+
+```python
+m = folium.Map(
+    location=[37.5665, 126.9780],  # 서울시청 좌표
+    zoom_start=15
+)
+m   # Colab에서 셀에 그대로 입력하면 지도가 출력됨
+```
+
+| 옵션 | 의미 | 추천값 |
+| :--- | :--- | :--- |
+| `location` | 지도 중심 [위도, 경도] | 분석 대상의 평균 좌표 |
+| `zoom_start` | 확대 정도 | 도시 단위 11~13, 동네 15~17 |
+| `tiles` | 배경 지도 스타일 | `OpenStreetMap`(기본), `cartodb positron`(밝음), `cartodb dark_matter`(어두움) |
+
+#### 실습 ② — 마커 + 팝업 + 툴팁
+
+```python
+loc = {'백석독수리': [36.838824, 127.182504]}
+
+m = folium.Map(location=loc['백석독수리'], zoom_start=18)
+
+folium.Marker(
+    location = loc['백석독수리'],
+    popup    = '내 위치',          # 클릭하면 보임
+    tooltip  = '나여기있지롱',      # 마우스 올리면 보임
+    icon     = folium.Icon(color='orange')
+).add_to(m)
+
+m
+```
+
+#### 실습 ③ — HTML 팝업 (이미지·링크 삽입)
+
+```python
+folium.Marker(
+    location=loc['백석독수리'],
+    popup=folium.Popup(
+        '<a href="https://www.bs.ac.kr" target="_blank">백석대학교</a>'
+        '<br><img src="logo.png" width="100">',
+        max_width=300
+    ),
+    icon=folium.Icon(color='red')
+).add_to(m)
+```
+
+#### 실습 ④ — HTML 파일로 저장 & 공유
+
+```python
+m.save('myLoca.html')
+print('저장 완료! 브라우저에서 myLoca.html을 열어 보세요.')
+```
+
+저장된 HTML은 그 자체로 **완전한 인터랙티브 지도**다. 메일·블로그·카페에 첨부하면 누구나 클릭·확대해 볼 수 있다.
+
+---
+
+### 9.3 미션 — 나만의 여행 버킷리스트 지도
+
+| 단계 | 할 일 |
+| :--- | :--- |
+| 1 | 가고 싶은 여행지 **3곳** 선정 |
+| 2 | 구글맵에서 **위도·경도** 찾기 (장소 우클릭 → ‘이곳의 좌표는?’) |
+| 3 | 딕셔너리에 저장 — `buckets = {'영국': [...], ...}` |
+| 4 | 각 마커에 **다른 색상** 적용 (`red`/`blue`/`green`) |
+| 5 | 툴팁에 사진(`<img>`) 삽입 |
+| 6 | `tiles="cartodb positron"`로 깔끔한 배경 |
+| 7 | `m.save("my_bucket_list.html")`로 저장 |
+
+#### 참고 좌표
+
+| 도시 | 좌표 (위도, 경도) |
+| :--- | :--- |
+| 영국 — 내셔널 갤러리 | (51.5089, −0.1283) |
+| 뉴욕 — 브로드웨이 | (40.8124, −73.9627) |
+| 로마 — 트레비 분수 | (41.9010, 12.4811) |
+| 스위스 — 베른 | (46.9479, 7.4475) |
+| 바르셀로나 — 사그라다 파밀리아 | (41.4036, 2.1744) |
+| 몽골 — 고비사막 | (42.7952, 105.0324) |
+| 평양 | (39.0293, 125.7428) |
+
+#### 완성 코드 예시
+
+```python
+import folium
+
+# 1. 데이터 준비
+buckets = {
+    '영국':  [51.5089,   -0.1283],
+    '스위스': [46.9479,    7.4475],
+    '몽골':  [42.7952,  105.0324],
+}
+
+# 2. 지도 생성 (스위스 중심, 밝은 배경)
+m = folium.Map(
+    location=buckets['스위스'],
+    zoom_start=3,
+    tiles='cartodb positron'
+)
+
+# 3. 마커 3개
+folium.Marker(buckets['스위스'], popup='베른',     icon=folium.Icon(color='red')).add_to(m)
+folium.Marker(buckets['영국'],   popup='런던',     icon=folium.Icon(color='blue')).add_to(m)
+folium.Marker(buckets['몽골'],   popup='고비사막', icon=folium.Icon(color='green')).add_to(m)
+
+# 4. HTML 저장
+m.save('my_bucket_list.html')
+```
+
+---
+
+### 9.4 실전 프로젝트 — 공공데이터로 그리는 ‘전국 보훈병원 지도’
+
+이번 프로젝트의 목표는 **공공데이터 포털 → 데이터 정제 → Folium 시각화 → HTML 공유**까지 전 과정을 한 번에 경험하는 것이다.
+
+| 항목 | 내용 |
+| :--- | :--- |
+| 데이터 출처 | **공공데이터 포털** (data.go.kr) |
+| 파일명 | `국가보훈부_보훈의료 위탁병원 현황_20250101.csv` |
+| 핵심 컬럼 | 위탁병원명 · 광역시도명 · 상세주소 · 전화번호 · 위도 · 경도 |
+| 시각화 | 지역별 색상이 다른 `CircleMarker` |
+
+#### Step 1 — 인코딩 감지 + CSV 로드
+
+```python
+import pandas as pd
+import chardet
+
+path = '/content/drive/MyDrive/data/보훈의료_위탁병원.csv'
+
+# 한국어 CSV는 EUC-KR 인 경우가 많음
+with open(path, 'rb') as f:
+    enc = chardet.detect(f.read())['encoding']
+
+df = pd.read_csv(path, encoding=enc)
+
+cols = ['위탁병원명','광역시도명','상세주소','전화번호','위도','경도']
+hos = df[cols].dropna()
+hos.head()
+```
+
+#### Step 2 — 지도 중심 계산 + 지역별 색상 매핑
+
+```python
+import folium, seaborn as sns
+
+# 1) 모든 병원의 평균 좌표 → 지도 중심
+center = [hos['위도'].mean(), hos['경도'].mean()]
+m = folium.Map(location=center, zoom_start=7)
+
+# 2) 광역시도 개수만큼 색상 자동 생성
+regions = hos['광역시도명'].unique()
+palette = sns.color_palette('husl', len(regions))
+
+region_colors = {
+    r: '#%02x%02x%02x' % (int(c[0]*255), int(c[1]*255), int(c[2]*255))
+    for r, c in zip(regions, palette)
+}
+```
+
+#### Step 3 — CircleMarker 일괄 추가
+
+```python
+for _, row in hos.iterrows():
+    color = region_colors.get(row['광역시도명'], '#808080')
+    popup_html = (
+        f"<div style='white-space:nowrap'>"
+        f"{row['상세주소']}, {row['전화번호']}"
+        f"</div>"
+    )
+    folium.CircleMarker(
+        location  = [row['위도'], row['경도']],
+        radius    = 5,
+        color     = color, fill=True, fill_color=color,
+        tooltip   = row['위탁병원명'],
+        popup     = folium.Popup(popup_html, max_width=300)
+    ).add_to(m)
+
+m.save('보훈병원_전국_위탁현황.html')
+```
+
+#### 더 가 보기 (Folium 고급 기능)
+
+| 기능 | 한 줄 설명 |
+| :--- | :--- |
+| `MarkerCluster` | 마커가 겹칠 때 자동 그룹핑 |
+| `HeatMap` | 데이터 밀도를 색의 농도로 표현 |
+| `Choropleth` | 행정구역(시·구·동)별로 색칠 — 인구·소득 등 |
+
+| 🛠 **활동 9-1 — 우리 동네 지도 만들기** |
+| :---- |
+| 위 코드를 응용해 **우리 동네 카페 5곳**(또는 도서관·공원 등)의 인터랙티브 지도를 만든다. <br>① 좌표 직접 수집 → ② 색상 다르게 → ③ 사진·평점 정보 팝업 → ④ HTML 저장 후 친구에게 공유 |
+
+| 🧠 **확장 과제** |
+| :---- |
+| 공공데이터 포털에서 **‘인구 데이터’**를 받아, Choropleth로 **시·도별 인구 밀도 지도**를 만들어 보자. 데이터 정제(`행정구역코드` 매핑)가 가장 큰 난관이 될 것이다. |
+
+---
+
+### 📚 4부 정리하기
+
+- 공공데이터 포털(data.go.kr)에서 **누구나 무료로** 진짜 데이터를 받을 수 있다.
+- 데이터 분석은 ‘**좋은 질문 → 정제 → 시각화 → 해석**’의 반복이다.
+- 타이타닉 데이터로 영화의 ‘여성·아이 우선’과 ‘상류층 우대’가 **사실임을 검증**했다.
+- 의사결정나무는 약 80%대 정확도로 잭과 로즈의 운명을 데이터로 다시 그렸다.
+- Folium은 한 줄짜리 지도부터 공공데이터 매핑까지, **공유 가능한 인터랙티브 시각화**를 가능하게 한다.
+
+### ✏️ 확인해 보기
+
+1. CSV 파일이 한글이 깨질 때 가장 먼저 확인할 것은 무엇인가?
+2. 타이타닉 모델에서 `boat` 열을 학습에 사용하면 안 되는 이유를 ‘데이터 누수’ 관점에서 설명하라.
+3. `train_test_split`을 8:2로 나누는 까닭은 무엇인가?
+4. Folium에서 마커 색상은 어떤 옵션으로 바꿀 수 있는가?
+5. 공공데이터 포털의 CSV로 만들 수 있는 ‘**우리 사회에 도움이 되는 시각화**’ 아이디어를 3개 제안하라.
+
+---
+
+## 마치며 — 데이터를 읽는 사람이 데이터에 끌려다니지 않는다
+
+이 책은 작은 한 권의 입문서다. 그러나 우리는 이미 큰 길을 걸었다.
+
+- 1부에서 **나의 일상이 곧 데이터**라는 사실을 만났고,
+- 2부에서 **인류가 어떻게 기록과 시각화로 세상을 이해했는지** 살폈고,
+- 3부에서 **인공지능이 어디에서 왔으며 어떤 윤리적 무게를 짊어졌는지**를 짚었으며,
+- 4부에서 **직접 데이터를 손으로 만져 그래프와 지도를 만들었다**.
+
+> **데이터 리터러시**란 결국, ‘**내가 보고 있는 숫자가 어떻게 만들어졌는지를 묻는 습관**’이다.
+
+알고리즘이 점점 더 많은 결정을 대신하는 시대에, 그 질문을 던질 줄 아는 사람이 곧 미래를 설계하는 사람이다. 이 책의 마지막 페이지를 덮는 순간, 여러분의 데이터 여정은 비로소 시작된다.
+
+---
