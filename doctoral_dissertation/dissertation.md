@@ -45,7 +45,7 @@
 
 본 연구에서 사고 주도성이란 생성형 AI를 활용하는 학습 과정에서 학습자가 문제 이해, 질문 생성, 산출물 검토, 최종 판단, 책임 인식을 AI에 전적으로 위임하지 않고 유지하는 상태를 의미한다. 이는 AI 사용을 제한하자는 의미가 아니다. 오히려 AI를 적극적으로 활용하되, 학습자가 사고의 방향과 판단의 기준을 잃지 않도록 하는 것이다.
 
-사고 주도성은 자기조절학습과 밀접하지만 동일한 개념은 아니다. 자기조절학습이 학습 목표 달성을 위한 동기, 전략, 행동의 조절을 포괄적으로 다룬다면, 사고 주도성은 그중에서도 ‘AI와 학습자 사이의 사고 분담’이라는 특정 국면에 초점을 둔다. 즉 사고 주도성은 학습자가 어떤 사고를 스스로 수행하고 어떤 사고를 AI에 위임하는지를 자각하고 조절하는 것에 관한 개념이다. 이는 학습자가 지식 생산 과정에서 판단의 주체로 남아 있는가를 묻는 인식론적 행위주체성 논의와도 맞닿아 있다. 생성형 AI 환경에서는 산출물이 쉽게 완성되기 때문에, 학습자가 사고의 주체로 남아 있는지가 산출물의 외형만으로는 드러나지 않는다. 이 점에서 사고 주도성은 생성형 AI 활용 학습을 설명하기 위해 별도로 주목할 필요가 있는 개념이다.
+사고 주도성은 자기조절학습과 밀접하지만 동일한 개념은 아니다. 자기조절학습이 학습 목표 달성을 위한 동기, 전략, 행동의 조절을 포괄적으로 다룬다면, 사고 주도성은 그중에서도 ‘AI와 학습자 사이의 사고 분담’이라는 특정 국면에 초점을 둔다. 즉 사고 주도성은 학습자가 어떤 사고를 스스로 수행하고 어떤 사고를 AI에 위임하는지를 자각하고 조절하는 것에 관한 개념이다. 이는 학습자가 지식 생산 과정에서 판단의 주체로 남아 있는가를 묻는 인식론적 행위주체성(Miller 등, 2018) 논의와도 맞닿아 있다. 생성형 AI 환경에서는 산출물이 쉽게 완성되기 때문에, 학습자가 사고의 주체로 남아 있는지가 산출물의 외형만으로는 드러나지 않는다. 이 점에서 사고 주도성은 생성형 AI 활용 학습을 설명하기 위해 별도로 주목할 필요가 있는 개념이다.
 
 생성형 AI 활용 교양수업에서 사고 주도성은 다음 네 가지 차원으로 구체화할 수 있다.
 
@@ -89,9 +89,11 @@ Draxler, F., Werner, A., Lehmann, F., Hoppe, M., Schmidt, A., Buschek, D., & Wel
 
 Flavell, J. H. (1979). Metacognition and cognitive monitoring: A new area of cognitive-developmental inquiry. *American Psychologist, 34*(10), 906–911.
 
-Gerlich, M. (2025). AI tools in society: Impacts on cognitive offloading and the future of critical thinking. *Societies, 15*(1), 6.
+Gerlich, M. (2025). AI tools in society: Impacts on cognitive offloading and the future of critical thinking. *Societies, 15*(1), 6. https://doi.org/10.3390/soc15010006
 
 Long, D., & Magerko, B. (2020). What is AI literacy? Competencies and design considerations. In *Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems* (pp. 1–16). ACM.
+
+Miller, E., Manz, E., Russ, R., Stroupe, D., & Berland, L. (2018). Addressing the epistemic elephant in the room: Epistemic agency and the next generation science standards. *Journal of Research in Science Teaching*. https://doi.org/10.1002/tea.21459
 
 Risko, E. F., & Gilbert, S. J. (2016). Cognitive offloading. *Trends in Cognitive Sciences, 20*(9), 676–688.
 
