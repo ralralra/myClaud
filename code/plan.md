@@ -1,0 +1,18 @@
+src/
+  app/
+    page.tsx
+  components/
+    ScriptEditor.tsx
+    PresentationView.tsx
+    FontSizeControls.tsx
+    SpeechStatus.tsx
+  hooks/
+    useSpeechRecognition.ts
+    useAutoScroll.ts
+  utils/
+    splitSentences.ts
+    normalizeText.ts
+    similarity.ts
+    matchSentence.ts
+  types/
+    script.ts
