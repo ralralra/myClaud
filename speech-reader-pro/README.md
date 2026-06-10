@@ -1,3 +1,9 @@
+# 앱설치
+speechreaderpro.netlify.app
+- 안드로이드 크롬: URL 접속 → 주소창 옆이나 메뉴에서 "앱 설치" 버튼 클릭
+- 아이폰 사파리: URL 접속 → 하단 공유 버튼(□↑) → "홈 화면에 추가"
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
