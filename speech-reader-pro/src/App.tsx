@@ -96,60 +96,48 @@ export default function App() {
     return result;
   };
 
-  // --- 쿨다운 ref: 연속 매칭 방지 ---
-  const lastMatchTimeRef = useRef<number>(0);
-  const MATCH_COOLDOWN_MS = 700;
+  // --- 누적 transcript ref: 현재 문장 시작 이후 들린 내용 누적 ---
+  const cumulativeRef = useRef<string>("");
 
   // --- advance 공통 처리 ---
   const advanceTo = useCallback((nextIdx: number) => {
-    lastMatchTimeRef.current = Date.now();
+    cumulativeRef.current = ""; // 문장 전환 시 누적 초기화
     currentIndexRef.current = nextIdx;
     setCurrentIndex(nextIdx);
     setRecentTranscript("");
   }, []);
 
-  // --- 매칭 로직 ---
-  // isFinal: Web Speech API의 isFinal 값 그대로 전달
-  const handleMatch = useCallback((spoken: string, isFinal: boolean) => {
-    const now = Date.now();
-    if (now - lastMatchTimeRef.current < MATCH_COOLDOWN_MS) return;
-
+  // --- 매칭 로직: 현재 문장 진행률 기반 ---
+  // 다음 문장 키워드 감지 방식(Strategy B) 완전 제거.
+  // 학술 텍스트처럼 단어가 반복되는 경우 오작동하기 때문.
+  // 대신 "현재 문장의 키워드를 몇 % 읽었는지"만으로 판단.
+  const handleMatch = useCallback((spoken: string) => {
     const normSpoken = normalize(spoken);
     if (normSpoken.length < 2) return;
 
     const curIdx = currentIndexRef.current;
     const curSentences = sentencesRef.current;
-    if (curSentences.length === 0) return;
+    if (curSentences.length === 0 || curIdx >= curSentences.length - 1) return;
 
-    // ── 전략 A: 현재 문장 끝 감지 → advance (final에서만) ────────
-    // "습니다","이다" 등 공통 어미가 interim에서 반복 감지되면
-    // 연쇄 점프(1→2→3→4) 발생 → final 결과에서만 체크
-    if (isFinal && curIdx < curSentences.length - 1) {
-      const cur = curSentences[curIdx];
-      // 끝 4글자로 늘려 공통 어미("니다") 오매칭 줄임
-      const suffix = cur.normalizedText.slice(-4);
-      if (suffix.length >= 4 && normSpoken.includes(suffix)) {
+    // final 결과를 누적
+    cumulativeRef.current += normSpoken;
+    const cumulative = cumulativeRef.current;
+
+    const cur = curSentences[curIdx];
+
+    // 현재 문장 키워드 중 누적 transcript에 등장한 비율 계산
+    if (cur.keywords.length > 0) {
+      const matched = cur.keywords.filter(kw => cumulative.includes(kw)).length;
+      const ratio = matched / cur.keywords.length;
+      // 65% 이상 읽혔으면 다음 문장으로
+      if (ratio >= 0.65) {
         advanceTo(curIdx + 1);
-        return;
       }
-    }
-
-    // ── 전략 B: 다음 문장 시작 감지 (interim·final 모두) ──────────
-    // 다음 1~2문장의 첫 단어가 들리면 advance (기존 방식 유지)
-    for (let offset = 1; offset <= 2; offset++) {
-      const nextIdx = curIdx + offset;
-      if (nextIdx >= curSentences.length) break;
-
-      const target = curSentences[nextIdx];
-      const isKeywordMatch = target.keywords.some(kw => kw.length >= 2 && normSpoken.includes(kw));
-      // startMatch는 final에서만 (interim prefix는 오매칭 많음)
-      const isStartMatch = isFinal
-        && target.normalizedText.length > 4
-        && normSpoken.includes(target.normalizedText.substring(0, 4));
-
-      if (isKeywordMatch || isStartMatch) {
-        advanceTo(nextIdx);
-        return;
+    } else {
+      // 키워드가 없는 짧은 문장: suffix 4글자로 판단
+      const suffix = cur.normalizedText.slice(-4);
+      if (suffix.length >= 4 && cumulative.includes(suffix)) {
+        advanceTo(curIdx + 1);
       }
     }
   }, [advanceTo]);
@@ -179,10 +167,10 @@ export default function App() {
         for (let i = event.resultIndex; i < event.results.length; ++i) {
           const transcript = event.results[i][0].transcript;
           if (event.results[i].isFinal) {
-            handleMatch(transcript, true);
+            handleMatch(transcript);
           } else {
             interim += transcript;
-            // interim은 화면 표시용만 — 오매칭 방지를 위해 매칭 호출 없음
+            // interim은 화면 표시용만
           }
         }
         setRecentTranscript(interim);
