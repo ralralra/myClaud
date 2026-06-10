@@ -98,7 +98,7 @@ export default function App() {
 
   // --- 쿨다운 ref: 연속 매칭 방지 ---
   const lastMatchTimeRef = useRef<number>(0);
-  const MATCH_COOLDOWN_MS = 400;
+  const MATCH_COOLDOWN_MS = 700;
 
   // --- advance 공통 처리 ---
   const advanceTo = useCallback((nextIdx: number) => {
@@ -121,14 +121,14 @@ export default function App() {
     const curSentences = sentencesRef.current;
     if (curSentences.length === 0) return;
 
-    // ── 전략 A: 현재 문장 끝 감지 → advance ──────────────────────
-    // suffix(끝 3글자)가 들리는 순간 넘어감.
-    // interim에서도 동작해서 문장 끝 발화 직후 바로 반응.
-    // A-2(키워드 비율) 제거: 문장 중반에 키워드가 몰리면 중간 점프 발생했던 원인.
-    if (curIdx < curSentences.length - 1) {
+    // ── 전략 A: 현재 문장 끝 감지 → advance (final에서만) ────────
+    // "습니다","이다" 등 공통 어미가 interim에서 반복 감지되면
+    // 연쇄 점프(1→2→3→4) 발생 → final 결과에서만 체크
+    if (isFinal && curIdx < curSentences.length - 1) {
       const cur = curSentences[curIdx];
-      const suffix = cur.normalizedText.slice(-3);
-      if (suffix.length >= 3 && normSpoken.includes(suffix)) {
+      // 끝 4글자로 늘려 공통 어미("니다") 오매칭 줄임
+      const suffix = cur.normalizedText.slice(-4);
+      if (suffix.length >= 4 && normSpoken.includes(suffix)) {
         advanceTo(curIdx + 1);
         return;
       }
