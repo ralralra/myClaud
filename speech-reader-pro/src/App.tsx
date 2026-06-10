@@ -182,8 +182,7 @@ export default function App() {
             handleMatch(transcript, true);
           } else {
             interim += transcript;
-            // interim: 전략 B(다음 문장 시작 감지)만 적용 — 쿨다운이 빠른 연속 점프 차단
-            handleMatch(interim, false);
+            // interim은 화면 표시용만 — 오매칭 방지를 위해 매칭 호출 없음
           }
         }
         setRecentTranscript(interim);
