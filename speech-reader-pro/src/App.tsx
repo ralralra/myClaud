@@ -222,7 +222,7 @@ export default function App() {
           if (restartTimerRef.current) clearTimeout(restartTimerRef.current);
           restartTimerRef.current = setTimeout(() => {
             try { recognition.start(); } catch (e) { }
-          }, 200);
+          }, 250);
         } else {
           setMicStatus("ready");
         }
