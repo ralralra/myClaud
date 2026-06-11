@@ -116,7 +116,7 @@ export default function App() {
 
   // --- advance 공통 처리 ---
   const advanceTo = useCallback((nextIdx: number) => {
-    cumulativeRef.current = "";              // 문장 전환 시 누적 초기화
+    cumulativeRef.current = "";              // 문장 전환시 누적 초기화
     sentenceEnteredAtRef.current = Date.now();
     currentIndexRef.current = nextIdx;
     setCurrentIndex(nextIdx);
@@ -136,7 +136,7 @@ export default function App() {
     const curIdx = currentIndexRef.current;
     const curSentences = sentencesRef.current;
     if (curSentences.length === 0 || curIdx >= curSentences.length - 1) return;
-    if (Date.now() - sentenceEnteredAtRef.current < 800) return;
+    if (Date.now() - sentenceEnteredAtRef.current < 600) return;
 
     const cur = curSentences[curIdx];
     // final 누적 + 아직 확정되지 않은 interim까지 합쳐 판단 (모바일에서 final이 늦게 와도 반응)
@@ -163,7 +163,7 @@ export default function App() {
     if (cur.keywords.length <= 2) {
       // 짧은 문장: 키워드 전부 + 끝부분 확인
       advance = matched === cur.keywords.length && endingHeard;
-    } else if (endingHeard && ratio >= 0.55) {
+    } else if (endingHeard && ratio >= 0.45) {
       advance = true;
     } else if (ratio >= 0.9) {
       // 어미가 오인식되어 끝 감지가 실패한 경우의 안전장치
@@ -222,7 +222,7 @@ export default function App() {
           if (restartTimerRef.current) clearTimeout(restartTimerRef.current);
           restartTimerRef.current = setTimeout(() => {
             try { recognition.start(); } catch (e) { }
-          }, 250);
+          }, 200);
         } else {
           setMicStatus("ready");
         }
