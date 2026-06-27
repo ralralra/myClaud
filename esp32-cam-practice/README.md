@@ -35,6 +35,18 @@ ESP32-CAM (OV2640, 4MB PSRAM) 보드를 단계별로 익히고 작은 프로젝�
 
 > 외부 가이드는 보드 코어 버전에 따라 빌드가 달라질 수 있으니 `docs/troubleshooting.md` 도 함께 참고.
 
+## 환경 권장값 (실전에서 검증)
+
+| 항목 | 값 | 이유 |
+|---|---|---|
+| esp32 보드 코어 | **2.0.17** | 3.x 는 빌드 캐시 깨짐(`undefined reference to 'Serial0'` 류), 얼굴 인식 단종 |
+| Board | AI Thinker ESP32-CAM | PSRAM 자동 설정, 카메라 핀 일치 |
+| Partition Scheme | Huge APP (3MB No OTA/1MB SPIFFS) | 카메라/얼굴인식 코드 크기 |
+| PSRAM | Enabled | 고해상도 캡처 필수 |
+| Upload Speed | **115200** | 460800/921600 은 `Invalid head of packet` 잘 남 |
+| Erase All Flash Before Sketch Upload | Disabled (평소) | 매번 켜면 업로드 길어지고 깨질 확률↑ |
+| Serial Monitor baud | 115200 | 코드의 `Serial.begin(115200)` 과 일치 |
+
 ## 폴더 안내
 
 - `docs/` — 핀맵, 자주 쓰는 카메라 설정값, 트러블슈팅

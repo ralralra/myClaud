@@ -4,7 +4,7 @@
 
 | 라이브러리 | 버전 | 용도 | 비고 |
 |---|---|---|---|
-| esp32 (Boards Manager) | 3.x | ESP32 전체 환경 | `esp_camera`/`esp_http_server` 포함, 별도 설치 필요 X |
+| esp32 (Boards Manager) | **2.0.17** (★ 권장) | ESP32 전체 환경 | `esp_camera`/`esp_http_server` 포함. 3.x는 빌드 캐시 깨짐 + CameraWebServer 얼굴 인식 없음. **2.0.17 고정 권장** |
 | (필요 시) ArduinoJson | 7.x | JSON 파싱 | 텔레그램/HA 연동 시 |
 | (필요 시) UniversalTelegramBot | 1.3.x | 텔레그램 봇 | 도어카메라 프로젝트용 |
 | (필요 시) PubSubClient | 2.8 | MQTT | HA 연동용 |
