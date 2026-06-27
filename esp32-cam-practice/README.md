@@ -22,7 +22,18 @@ ESP32-CAM (OV2640, 4MB PSRAM) 보드를 단계별로 익히고 작은 프로젝�
 | 4 | `04_camera_basic` | 카메라 초기화, JPEG 한 장 캡처 → Serial 출력 |
 | 5 | `05_camera_web_server` | 브라우저로 실시간 스트리밍 (공식 CameraWebServer) |
 | 6 | `06_motion_detection` | 프레임 차분으로 움직임 감지 → 사진 저장/알림 |
+| 7 | `07_face_recognition` | CameraWebServer 내장 얼굴 검출/인식 (Enroll Face) — RNT 튜토리얼 따라가기 |
 | ★ | `projects` | 완성형 미니 프로젝트 (예: 도어카메라, 타임랩스, 텔레그램 봇) |
+
+## 외부 참고 가이드
+
+| 링크 | 어느 단계에 좋은가 |
+|---|---|
+| [Random Nerd Tutorials — ESP32-CAM Video Streaming and Face Recognition](https://randomnerdtutorials.com/esp32-cam-video-streaming-face-recognition-arduino-ide/) | 5단계 + 7단계. 스크린샷이 풍부함. 얼굴 인식은 esp32 코어 **2.x** 필수 |
+| [Espressif arduino-esp32 — Camera 예제](https://github.com/espressif/arduino-esp32/tree/master/libraries/ESP32/examples/Camera) | 원본 예제 모음 |
+| [Random Nerd Tutorials — ESP32-CAM 시리즈 인덱스](https://randomnerdtutorials.com/projects-esp32-cam/) | 타임랩스/SD 저장/PIR 모션 등 응용 예제 다수 |
+
+> 외부 가이드는 보드 코어 버전에 따라 빌드가 달라질 수 있으니 `docs/troubleshooting.md` 도 함께 참고.
 
 ## 폴더 안내
 
