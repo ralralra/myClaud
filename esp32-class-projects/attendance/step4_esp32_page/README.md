@@ -33,6 +33,17 @@ void handleRoot() {
 WiFi.softAP(AP_SSID, AP_PASS);   // ESP32가 스스로 와이파이를 만든다
 ```
 
+### 맨 위의 낯선 두 줄 + setup 첫 줄은 뭐예요?
+```cpp
+#include "soc/soc.h"
+#include "soc/rtc_cntl_reg.h"
+...
+WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);  // setup() 첫 줄
+```
+ESP32가 와이파이를 켤 때 전류가 확 필요해서 전압이 잠깐 출렁이는데, 이때 보드가
+"전원 부족!"이라며 스스로 꺼지는(Brownout) 걸 막아주는 **안전장치**예요.
+없어도 대부분 동작하지만, 넣어두면 더 안정적입니다. (지금은 그냥 그대로 두면 됨)
+
 ## 해보기
 1. `step4_esp32_page.ino` 열기 → 보드 **ESP32 Dev Module** 선택 → **Upload**
 2. 업로드 끝나면 시리얼 모니터(115200) 열기
