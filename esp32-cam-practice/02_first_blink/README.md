@@ -1,5 +1,7 @@
 # 2단계 — 첫 업로드 (Blink + Hello)
 
+![ ](	/../main/esp32-cam-practice/images/image (1).png)
+
 ESP32-CAM에는 보드 뒷면에 **빨간 LED(GPIO33, active-low)** 와 앞면 **흰색 플래시 LED(GPIO4)** 가 있습니다.
 
 목표: 시리얼에 메시지 출력하면서 빨간 LED 깜빡여 보는 것.
