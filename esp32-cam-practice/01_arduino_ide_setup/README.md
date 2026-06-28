@@ -1,4 +1,5 @@
 # 1단계 — Arduino IDE 설정
+![esp32](esp32-cam-practice/images/image.png)
 
 ESP32-CAM은 USB가 없어서 **USB-UART 변환기**가 필수입니다. 가장 흔한 두 방법:
 
