@@ -10,7 +10,11 @@
 ### A. 공식 예제 사용 (추천, 처음엔 이걸로 — RNT 튜토리얼과 동일)
 Arduino IDE → `File` → `Examples` → `ESP32` → `Camera` → **CameraWebServer**
 
+![ ]( /../main/esp32-cam-practice/images/webserver.png)
+
 해야 할 일:
+
+
 1. 예제 열어서 상단의 `CAMERA_MODEL_AI_THINKER` **만** 활성화 (`//` 제거), 나머지 `CAMERA_MODEL_xxx` 들은 전부 `//` 로 주석. **이 한 줄을 빼먹으면 부팅은 되는데 카메라 init에서 조용히 멈춥니다** (실제로 가장 흔한 함정).
 2. `ssid` / `password` 입력 — 2.4GHz SSID 인지 확인
 3. `Tools` → `Partition Scheme` → **Huge APP (3MB No OTA/1MB SPIFFS)** 재확인 (카메라/얼굴인식 코드가 커서 기본 파티션이면 빌드 실패)
@@ -20,6 +24,12 @@ Arduino IDE → `File` → `Examples` → `ESP32` → `Camera` → **CameraWebSe
 7. 시리얼 모니터(115200)에 나오는 `http://192.168.x.x` 를 브라우저 주소창에 입력
 8. **Start Stream** 클릭 → MJPEG 스트림
 9. 좌측 패널에서 해상도/노출/화이트밸런스/특수효과 등을 토글하며 동작 차이 관찰
+
+
+![ ]( /../main/esp32-cam-practice/images/arduino-ide-camerawebserver-example.jpg)
+
+![ ]( /../main/esp32-cam-practice/images/tinkerAI.png)
+
 
 이 예제는 해상도/노출/화이트밸런스 등을 웹UI에서 조정할 수 있어서 카메라 튜닝 연습용으로 훌륭함.
 이 상태로 7단계(얼굴 인식)까지 그대로 이어집니다.
