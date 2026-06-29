@@ -33,6 +33,17 @@ void handleRoot() {
 WiFi.softAP(AP_SSID, AP_PASS);   // ESP32가 스스로 와이파이를 만든다
 ```
 
+### 맨 위의 낯선 두 줄 + setup 첫 줄은 뭐예요?
+```cpp
+#include "soc/soc.h"
+#include "soc/rtc_cntl_reg.h"
+...
+WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);  // setup() 첫 줄
+```
+ESP32가 와이파이를 켤 때 전류가 확 필요해서 전압이 잠깐 출렁이는데, 이때 보드가
+"전원 부족!"이라며 스스로 꺼지는(Brownout) 걸 막아주는 **안전장치**예요.
+없어도 대부분 동작하지만, 넣어두면 더 안정적입니다. (지금은 그냥 그대로 두면 됨)
+
 ## 해보기
 1. `step4_esp32_page.ino` 열기 → 보드 **ESP32 Dev Module** 선택 → **Upload**
 2. 업로드 끝나면 시리얼 모니터(115200) 열기
@@ -55,8 +66,9 @@ WiFi.softAP(AP_SSID, AP_PASS);   // ESP32가 스스로 와이파이를 만든다
 - [ ] 버튼 누르면 안내 팝업이 뜬다 (아직 진짜 출석은 X — 5단계에서)
 
 ## 잘 안 될 때
+- **`Brownout detector was triggered` 가 반복되고 "서버 시작됨"이 안 뜸** → 업로드 후 보드가 스케치로 안 넘어간 것. **IO0(BOOT) + RESET(EN) 버튼을 동시에 눌렀다 떼서 강제 재부팅** → 보통 바로 실행됨 (실전에서 가장 흔한 막힘!)
 - 페이지 안 뜸 → 주소는 **http://192.168.4.1** (https 아님!)
-- 와이파이 안 보임 → 시리얼에 "서버 시작됨" 떴는지 먼저 확인
+- 와이파이 안 보임 → 시리얼에 "서버 시작됨" 떴는지 먼저 확인. `ESP32-Attend` 를 집 와이파이와 같은 이름으로 두지 말 것
 - 자세히는 `../docs/troubleshooting.md`
 
 ## 직접 바꿔보기

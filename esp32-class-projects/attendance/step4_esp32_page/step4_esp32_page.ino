@@ -11,6 +11,8 @@
 
 #include <WiFi.h>
 #include <WebServer.h>
+#include "soc/soc.h"            // ↓ Brownout(전원 순간강하) 오작동 방지용
+#include "soc/rtc_cntl_reg.h"
 
 // ESP32가 직접 만들 와이파이 이름/비밀번호
 const char* AP_SSID = "ESP32-Attend";   // 폰 와이파이 목록에 뜰 이름
@@ -53,6 +55,7 @@ void handleRoot() {
 }
 
 void setup() {
+  WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);  // Brownout 감지기 끄기(안전장치)
   Serial.begin(115200);
   delay(300);
 
