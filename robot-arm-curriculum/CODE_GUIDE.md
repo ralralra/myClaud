@@ -72,7 +72,7 @@ delay(500);
 ### 3-2. 함수의 3요소
 ```cpp
 void goHome() {          // ① 이름(goHome)  ② void = 돌려주는 값 없음
-  moveTo(HOME, 15);      // ③ 중괄호 안 = 할 일
+  moveTo(HOME);          // ③ 중괄호 안 = 할 일
 }
 ```
 이제 어디서든 `goHome();` 한 줄이면 홈 자세로 간다.
@@ -80,14 +80,14 @@ void goHome() {          // ① 이름(goHome)  ② void = 돌려주는 값 없�
 ### 3-3. 매개변수(parameter) — 함수를 "재사용"하게 만드는 핵심
 같은 동작인데 목표만 다를 때, 목표를 **괄호로 받는다**.
 ```cpp
-void moveTo(int target[], int stepDelay) {   // target, stepDelay를 받아서
-  // 모든 서보를 target 쪽으로 1도씩 부드럽게 이동
+void moveTo(int target[]) {   // target(목표 자세 배열)을 받아서
+  // 팔(1~5번)을 target 쪽으로 1도씩 부드럽게 이동 (그리퍼는 제외)
 }
 ```
 호출할 때 값만 바꿔 넣으면 된다.
 ```cpp
-moveTo(PICK, 15);    // 집는 자세로 천천히
-moveTo(PLACE, 5);    // 놓는 자세로 빠르게
+moveTo(PICK);     // 집는 자세로
+moveTo(PLACE);    // 놓는 자세로
 ```
 함수 하나로 **모든 자세 이동**을 처리한다. 이게 "함수의 힘"이다.
 
@@ -100,12 +100,12 @@ moveTo(PLACE, 5);    // 놓는 자세로 빠르게
 ### 3-5. 자동화의 정체 — "함수를 순서대로 부르기"
 ```cpp
 void autoPickAndPlace() {
-  goHome();
-  moveTo(PICK_READY, 15);
-  gripperOpen();
-  moveTo(PICK, 15);
+  gripperOpen();       // 손을 펴고
+  moveTo(PICK_READY);
+  moveTo(PICK);
   gripperClose();      // 집고
-  moveTo(PLACE, 15);
+  moveTo(PICK_READY);
+  moveTo(PLACE);
   gripperOpen();       // 놓고
   goHome();
 }
@@ -115,19 +115,35 @@ void autoPickAndPlace() {
 
 ---
 
-## 4. 실행을 무엇으로 시킬까 — 버튼 vs 시리얼 (중요)
+## 4. 버튼(조이스틱 SW)으로 실행하기
 
-활동지는 "조이스틱 **버튼**으로 실행"이라고 적혀 있지만,
-**받은 코드와 기본 배선에는 버튼 입력이 없다.** 두 가지 선택지가 있다.
+이 수업에서는 **조이스틱 SW핀에 버튼 선을 하나 추가**해서 쓴다.
+`03_` 코드는 그 버튼을 디지털 **7번 핀**으로 읽도록 되어 있다(핀은 배선에 맞게 수정).
 
-- **(권장) 시리얼 명령으로 실행** — 추가 배선 0, 무조건 작동.
-  시리얼 모니터에서 `1` 입력 → 자동 동작. 수업에서 바로 쓸 수 있다.
-- **(선택) 물리 버튼으로 실행** — 조이스틱 모듈의 SW핀이나 별도 푸시버튼을
-  디지털 핀+GND에 연결(`INPUT_PULLUP`)하고 `digitalRead`로 읽는다.
-  ※ 핀 번호는 실제 배선을 확인해야 한다. (`03_` 코드 맨 아래 주석 참고)
+- 배선: 조이스틱 SW → 디지털 7번,  GND → GND.
+  SW는 누르면 GND와 연결되므로 `INPUT_PULLUP`을 쓰고, **눌림 = LOW**로 읽는다.
+- 코드 동작: 버튼이 `HIGH→LOW`로 바뀌는 **'눌리는 순간'에만** 한 번
+  `autoPickAndPlace()`를 실행한다(`delay(20)`으로 채터링 방지).
 
-> 수업 운영 팁: 9~10차시는 **시리얼 명령**으로 먼저 성공시키고,
-> 버튼은 "원하는 팀의 도전 과제"로 열어 두면 막힘 없이 진행된다.
+```cpp
+pinMode(BUTTON_PIN, INPUT_PULLUP);      // setup()
+...
+boolean nowButton = digitalRead(BUTTON_PIN);     // loop()
+if (lastButton == HIGH && nowButton == LOW) {    // 방금 눌림
+  delay(20);
+  if (digitalRead(BUTTON_PIN) == LOW) autoPickAndPlace();
+}
+lastButton = nowButton;
+```
+
+> 시리얼 명령(`1`/`h`/`p`)도 그대로 살려 두었다. 버튼 배선이 헷갈릴 때나
+> 디버깅할 때 시리얼로 먼저 확인하고, 완성되면 버튼으로 시연하면 좋다.
+
+### 그리퍼 각도 (이 로봇팔 기준)
+- **열림 = 0도, 닫힘 = 90도** → 코드의 `GRIP_OPEN = 0`, `GRIP_CLOSE = 90`.
+- **중요:** `moveTo()`는 팔(1~5번)만 움직이고 **그리퍼는 건드리지 않는다.**
+  옮기는 도중에 손이 멋대로 열려 물체를 떨어뜨리지 않게 하기 위함이다.
+  그리퍼는 항상 `gripperOpen()` / `gripperClose()`로만 여닫는다.
 
 ---
 

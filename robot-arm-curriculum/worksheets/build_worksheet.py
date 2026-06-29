@@ -73,6 +73,9 @@ table(["항목","내용","항목","내용"],
 doc.add_paragraph()
 note=doc.add_paragraph(); rr=note.add_run("※ 차시별로 한 장씩 배부하여 사용하고, 11~12차시에는 최종 보고서·자기평가표를 함께 제출한다.")
 rr.italic=True; rr.font.size=Pt(9); rr.font.color.rgb=RGBColor.from_string("808080")
+hw=doc.add_paragraph(); hr=hw.add_run("※ 하드웨어 기준: 그리퍼(6번) 열림 0° / 닫힘 90°, 1~5번 서보 중심 90°(0~180°). "
+                                      "조이스틱 SW핀에 버튼을 추가(디지털 7번 + GND)하여 자동 실행에 사용한다.")
+hr.italic=True; hr.font.size=Pt(9); hr.font.color.rgb=RGBColor.from_string("808080")
 doc.add_page_break()
 
 # ============ 차시 데이터 ============
@@ -140,7 +143,7 @@ sessions.append(dict(
 
 sessions.append(dict(
   no=5, title="그리퍼 장인", goal="그리퍼 각도를 조절해 다양한 물체를 안정적으로(부드럽게) 집는다.",
-  mission="깨지기 쉬운 화물 운반 — 마시멜로/종이컵을 터뜨리지 않고 옮겨라! 가장 적은 힘으로 집은 팀 승!",
+  mission="깨지기 쉬운 화물 운반 — 마시멜로/종이컵을 터뜨리지 않고 옮겨라! (그리퍼: 열림 0° / 닫힘 90°) 가장 적은 힘으로 집은 팀 승!",
   code="01_joystick_control.ino",
   tables=[("1. 물체별 집기 실험 기록표",
            ["물체","열린 각도","닫힌 각도","성공 여부","실패 원인"],
@@ -216,7 +219,7 @@ sessions.append(dict(
 
 sessions.append(dict(
   no=10, title="자동 Pick & Place", goal="기록한 포즈와 함수를 활용해, 명령(또는 버튼) 한 번으로 자동 동작을 실행한다.",
-  mission="원클릭 공장 — 시리얼에 '1'을 입력(또는 버튼)하면 집기→옮기기→놓기가 자동으로! 10번 중 몇 번 성공하나?",
+  mission="원클릭 공장 — 버튼(조이스틱 SW, 디지털 7번)을 누르면 집기→옮기기→놓기가 자동으로! 10번 중 몇 번 성공하나? (시리얼 '1'로도 실행 가능)",
   code="03_functions_button.ino",
   tables=[("1. 자동화 동작 흐름도 (함수 호출 순서)",
            ["순서","호출한 함수","목표 포즈"],

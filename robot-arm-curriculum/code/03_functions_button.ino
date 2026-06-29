@@ -1,60 +1,74 @@
 // ============================================================
-//  [3단계] 함수 만들기 + 자동 Pick & Place
+//  [3단계] 함수 만들기 + 버튼으로 자동 Pick & Place
 //  싸이피아 6자유도 로봇팔 - www.scipia.co.kr
 // ------------------------------------------------------------
 //  9~12차시의 핵심 코드. 두 가지를 새로 배운다.
 //   (1) 반복되는 동작을 "함수"로 묶기  → moveTo(), goHome(), grip...()
-//   (2) 명령 한 번으로 동작을 "자동" 실행하기 → autoPickAndPlace()
+//   (2) 버튼 한 번으로 동작을 "자동" 실행하기 → autoPickAndPlace()
 //
-//  실행 방법 (시리얼 모니터 9600 baud):
-//    h : 홈 자세로
-//    p : 현재 각도 출력(기록용)
-//    1 : 자동 Pick & Place 한 사이클 실행
-//  평소에는 조이스틱으로 수동 조작도 그대로 된다.
+//  ★ 하드웨어 설정 (이 로봇팔 기준)
+//    - 그리퍼(6번 서보): 닫힘 = 90도, 열림 = 0도
+//    - 1~5번 서보: 중심 90도, 0~180도
+//    - 조이스틱 SW핀 → 디지털 7번 + GND 에 버튼 배선 추가
+//      (SW는 누르면 GND와 연결됨 → INPUT_PULLUP 사용, 눌림 = LOW)
 //
-//  ※ 활동지의 "조이스틱 버튼"으로 실행하고 싶다면, 맨 아래
-//    [버튼으로 실행하기] 주석을 참고. 단, 기본 배선에는 버튼이
-//    연결돼 있지 않으므로 버튼 핀을 먼저 확인/연결해야 한다.
+//  실행 방법
+//    · 버튼(조이스틱 SW)을 누르면  → 자동 Pick & Place 실행
+//    · 시리얼 모니터(9600)에서도 가능: 1=자동실행, h=홈, p=각도출력
+//    · 평소에는 조이스틱으로 수동 조작도 그대로 된다.
 // ============================================================
 
 #include <Servo.h>
 
 const int SERVOS = 6;
 const int GRIPPER = 5;          // 그리퍼는 6번 서보(인덱스 5)
+const int BUTTON_PIN = 7;       // ★ 조이스틱 SW를 연결할 디지털 핀 (실제 배선에 맞게)
 int PIN[SERVOS], MIN[SERVOS], MAX[SERVOS], INITANGLE[SERVOS], ANA[SERVOS];
 Servo myservo[SERVOS];
 
-// ── 그리퍼 열림/닫힘 각도 (물체에 맞춰 학생이 조정) ──
-const int GRIP_OPEN  = 10;
-const int GRIP_CLOSE = 70;
+// ── 그리퍼 각도 (이 로봇팔: 열림 0도 / 닫힘 90도) ──
+const int GRIP_OPEN  = 0;
+const int GRIP_CLOSE = 90;
 
 // ── 기록해 둔 자세들 (8차시에서 구한 각도값으로 바꿔 넣는다) ──
-//    { 1번, 2번, 3번, 4번, 5번, 6번(그리퍼) }
-int HOME[SERVOS]        = { 90,  90,  90,  90,  90, 45 };
-int PICK_READY[SERVOS]  = { 60, 100,  80,  90,  90, GRIP_OPEN };  // 집기 직전(상공)
-int PICK[SERVOS]        = { 60, 130, 110,  90,  90, GRIP_OPEN };  // 집는 위치
-int PLACE_READY[SERVOS] = {120, 100,  80,  90,  90, GRIP_CLOSE }; // 놓기 직전(상공)
-int PLACE[SERVOS]       = {120, 130, 110,  90,  90, GRIP_CLOSE }; // 놓는 위치
+//    { 1번, 2번, 3번, 4번, 5번 }  ※ 그리퍼(6번)는 moveTo가 건드리지 않는다.
+//    팔(1~5번)만 옮기고, 손(그리퍼)은 gripperOpen()/gripperClose()로 따로 제어.
+int HOME[SERVOS]        = { 90,  90,  90,  90,  90, 0 };
+int PICK_READY[SERVOS]  = { 60, 100,  80,  90,  90, 0 };  // 집을 물체 위(상공)
+int PICK[SERVOS]        = { 60, 130, 110,  90,  90, 0 };  // 집는 위치(내려간 곳)
+int PLACE_READY[SERVOS] = {120, 100,  80,  90,  90, 0 };  // 놓을 곳 위(상공)
+int PLACE[SERVOS]       = {120, 130, 110,  90,  90, 0 };  // 놓는 위치
+
+boolean lastButton = HIGH;      // 버튼 직전 상태(눌림 감지용)
 
 void setup() {
   Serial.begin(9600);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);   // ★ 버튼 입력(내부 풀업)
 
   PIN[0] = 3;   MIN[0] = 0; MAX[0] = 180; INITANGLE[0] = 90; ANA[0] = 0;
   PIN[1] = 2;   MIN[1] = 0; MAX[1] = 180; INITANGLE[1] = 90; ANA[1] = 1;
   PIN[2] = 9;   MIN[2] = 0; MAX[2] = 180; INITANGLE[2] = 90; ANA[2] = 2;
   PIN[3] = 8;   MIN[3] = 0; MAX[3] = 180; INITANGLE[3] = 90; ANA[3] = 3;
   PIN[4] = 4;   MIN[4] = 0; MAX[4] = 180; INITANGLE[4] = 90; ANA[4] = 4;
-  PIN[5] = 5;   MIN[5] = 0; MAX[5] = 90;  INITANGLE[5] = 45; ANA[5] = 5;
+  PIN[5] = 5;   MIN[5] = 0; MAX[5] = 90;  INITANGLE[5] = 0;  ANA[5] = 5; // 그리퍼: 0(열림)으로 시작
 
   for (int i = 0; i < SERVOS; i++) {
     myservo[i].attach(PIN[i]);
     myservo[i].write(INITANGLE[i]);
   }
-  Serial.println(F("준비 완료. h=홈, p=각도출력, 1=자동 Pick&Place"));
+  Serial.println(F("준비 완료. 버튼을 누르면 자동 실행. (시리얼: 1=실행, h=홈, p=각도)"));
 }
 
 void loop() {
-  // 1) 시리얼 명령 확인
+  // 1) 버튼(조이스틱 SW) 확인 — 눌리는 '순간'에만 1번 실행
+  boolean nowButton = digitalRead(BUTTON_PIN);
+  if (lastButton == HIGH && nowButton == LOW) {   // HIGH→LOW = 방금 눌림
+    delay(20);                                    // 떨림(채터링) 방지
+    if (digitalRead(BUTTON_PIN) == LOW) autoPickAndPlace();
+  }
+  lastButton = nowButton;
+
+  // 2) 시리얼 명령(보조)
   if (Serial.available() > 0) {
     char cmd = Serial.read();
     if (cmd == '1') autoPickAndPlace();
@@ -62,7 +76,7 @@ void loop() {
     else if (cmd == 'p' || cmd == 'P') printAngles();
   }
 
-  // 2) 명령이 없으면 평소처럼 조이스틱 수동 조작
+  // 3) 명령이 없으면 평소처럼 조이스틱 수동 조작
   joystickControl();
   delay(20);
 }
@@ -71,42 +85,41 @@ void loop() {
 //   여기서부터가 "함수 만들기"의 핵심 — 반복 동작을 묶는다
 // ============================================================
 
-// [함수1] 목표 자세(target)로 모든 서보를 1도씩 부드럽게 이동
-//   stepDelay 가 클수록 천천히 움직인다.
-void moveTo(int target[], int stepDelay) {
+// [함수1] 팔(1~5번)을 목표 자세로 1도씩 부드럽게 이동.
+//   ※ 그리퍼(6번)는 일부러 건드리지 않는다 → 옮기는 도중 물체를 놓치지 않게.
+void moveTo(int target[]) {
   boolean moving = true;
   while (moving) {
     moving = false;
-    for (int i = 0; i < SERVOS; i++) {
+    for (int i = 0; i < GRIPPER; i++) {          // 0~4번만(그리퍼 제외)
       int cur = myservo[i].read();
       if (cur < target[i])      { myservo[i].write(cur + 1); moving = true; }
       else if (cur > target[i]) { myservo[i].write(cur - 1); moving = true; }
     }
-    delay(stepDelay);
+    delay(15);   // 클수록 천천히 움직인다(물체를 치면 값을 키운다)
   }
 }
 
-// [함수2] 그리퍼 열기 / 닫기 — moveTo 없이 그리퍼만 제어
+// [함수2] 그리퍼 열기 / 닫기 — 손만 제어
 void gripperOpen()  { myservo[GRIPPER].write(GRIP_OPEN);  delay(400); }
 void gripperClose() { myservo[GRIPPER].write(GRIP_CLOSE); delay(400); }
 
 // [함수3] 홈 자세로
-void goHome() { moveTo(HOME, 15); }
+void goHome() { moveTo(HOME); }
 
 // [함수4] 자동 Pick & Place — 위 함수들을 "순서대로" 부르면 끝!
 void autoPickAndPlace() {
   Serial.println(F(">> 자동 Pick & Place 시작"));
-  goHome();
-  moveTo(PICK_READY, 15);   // 집을 물체 위로
-  gripperOpen();
-  moveTo(PICK, 15);         // 내려가서
+  gripperOpen();            // 손을 펴고
+  moveTo(PICK_READY);       // 집을 물체 위로
+  moveTo(PICK);             // 내려가서
   gripperClose();           // 집고
-  moveTo(PICK_READY, 15);   // 들어올리고
-  moveTo(PLACE_READY, 15);  // 놓을 곳 위로
-  moveTo(PLACE, 15);        // 내려놓을 위치로
+  moveTo(PICK_READY);       // 들어올리고
+  moveTo(PLACE_READY);      // 놓을 곳 위로
+  moveTo(PLACE);            // 내려놓을 위치로
   gripperOpen();            // 놓고
-  moveTo(PLACE_READY, 15);  // 다시 올라와서
-  goHome();
+  moveTo(PLACE_READY);      // 다시 올라와서
+  goHome();                 // 홈으로
   Serial.println(F(">> 완료"));
 }
 
@@ -132,13 +145,3 @@ void printAngles() {
   }
   Serial.println(F(" }"));
 }
-
-// ------------------------------------------------------------
-//  [버튼으로 실행하기] — 조이스틱 버튼이나 별도 푸시버튼을 쓸 때
-//  기본 배선에는 버튼이 없다. 버튼 한쪽을 디지털 핀, 다른 쪽을 GND에
-//  연결한 뒤(내부 풀업 사용) 아래처럼 바꾼다. (BUTTON_PIN은 실제 핀으로)
-//
-//    const int BUTTON_PIN = 7;
-//    setup() 안:  pinMode(BUTTON_PIN, INPUT_PULLUP);
-//    loop() 안:   if (digitalRead(BUTTON_PIN) == LOW) autoPickAndPlace();
-// ------------------------------------------------------------

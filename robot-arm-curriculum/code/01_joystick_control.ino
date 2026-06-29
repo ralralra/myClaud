@@ -26,7 +26,7 @@ void setup() {
   PIN[3] = 8;   MIN[3] = 0; MAX[3] = 180; INITANGLE[3] = 90; ANA[3] = 3;
   //  #5 서보
   PIN[4] = 4;   MIN[4] = 0; MAX[4] = 180; INITANGLE[4] = 90; ANA[4] = 4;
-  //  #6 서보 (그리퍼: 가동범위가 좁다)
+  //  #6 서보 (그리퍼: 열림 0도 / 닫힘 90도, 가동범위 0~90)
   PIN[5] = 5;   MIN[5] = 0; MAX[5] = 90;  INITANGLE[5] = 45; ANA[5] = 5;
 
   for (int i = 0; i < SERVOS; i++) {
