@@ -135,6 +135,10 @@ def render_table(headers, rows):
         trs += f"<tr>{tds}</tr>"
     return f'<table class="grid"><thead><tr>{th}</tr></thead><tbody>{trs}</tbody></table>'
 
+def block(title, headers, rows, weight):
+    return (f'<div class="block" style="flex-grow:{weight}">'
+            f'<h3 class="sec">{E(title)}</h3>{render_table(headers, rows)}</div>')
+
 def render_session(s):
     parts = [f'''
     <section class="page">
@@ -145,13 +149,14 @@ def render_session(s):
         <div class="codechip">💻 {E(s["code"])}</div>
       </div>
       <div class="mission"><span class="mtag">🏆 도전 미션</span> {E(s["mission"])}</div>
-    ''']
+      <div class="content">''']
+    # 표 블록 — 행 수에 비례해 세로 공간을 나눠 가져 페이지를 꽉 채우고 입력칸을 키운다
     for title, headers, rows in s["tables"]:
-        parts.append(f'<h3 class="sec">{E(title)}</h3>')
-        parts.append(render_table(headers, rows))
-    parts.append('<h3 class="sec">✏️ 오늘의 정리</h3>')
+        w = max(2, len(rows))
+        parts.append(block(title, headers, rows, w))
     qrows = [[q, ""] for q in s["qs"]]
-    parts.append(render_table(["질문","나의 답변"], qrows))
+    parts.append(block("✏️ 오늘의 정리", ["질문","나의 답변"], qrows, max(2, len(qrows))))
+    parts.append('</div>')  # /content
     parts.append('<div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div>')
     parts.append('</section>')
     return "".join(parts)
@@ -181,25 +186,34 @@ cover = '''
 
 report = '''
 <section class="page">
-  <div class="hd report"><div class="hdtxt"><h2>최종 미션 보고서 & 자기평가</h2>
-   <div class="goal"><b>제출</b> 11~12차시 마무리에 작성하여 제출</div></div></div>
-  <h3 class="sec">1. 미션 보고서</h3>
-  <table class="grid"><tbody>
-    <tr><th style="width:18%">팀명</th><td></td><th style="width:18%">작성일</th><td></td></tr>
-    <tr><th>사용 부품</th><td colspan="3">로봇팔, 아두이노, 조이스틱, 서보모터(6), 그리퍼</td></tr>
-    <tr><th>대표 미션</th><td colspan="3"></td></tr>
-    <tr><th>동작 순서</th><td colspan="3" style="height:70px"></td></tr>
-    <tr><th>핵심 각도값</th><td colspan="3" style="height:55px"></td></tr>
-  </tbody></table>
-  <h3 class="sec">2. 자기평가표</h3>
-  <table class="grid"><thead><tr><th style="width:70%">평가 항목</th><th>예 / 아니오</th></tr></thead><tbody>
-   <tr><td>로봇팔의 관절 구조를 이해하였다</td><td>☐ 예　☐ 아니오</td></tr>
-   <tr><td>로봇팔을 안정적으로 조작할 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
-   <tr><td>성공 자세를 각도값으로 기록할 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
-   <tr><td>반복 동작을 함수로 만들 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
-   <tr><td>버튼/명령으로 자동 동작을 실행할 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
-   <tr><td>활동을 진로와 연결해 설명할 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
-  </tbody></table>
+  <div class="hd report">
+    <div class="badge" style="background:linear-gradient(135deg,#e74c3c,#c0392b)">★<span>보고서</span></div>
+    <div class="hdtxt"><h2>최종 미션 보고서 &amp; 자기평가</h2>
+     <div class="goal"><b>제출</b> 11~12차시 마무리에 작성하여 제출</div></div>
+  </div>
+  <div class="content">
+    <div class="block" style="flex-grow:5">
+      <h3 class="sec">1. 미션 보고서</h3>
+      <table class="grid"><tbody>
+        <tr><td style="width:18%">팀명</td><td></td><td style="width:18%">작성일</td><td></td></tr>
+        <tr><td>사용 부품</td><td colspan="3">로봇팔, 아두이노, 조이스틱, 서보모터(6), 그리퍼</td></tr>
+        <tr><td>대표 미션</td><td colspan="3"></td></tr>
+        <tr><td>동작 순서</td><td colspan="3"></td></tr>
+        <tr><td>핵심 각도값</td><td colspan="3"></td></tr>
+      </tbody></table>
+    </div>
+    <div class="block" style="flex-grow:6">
+      <h3 class="sec">2. 자기평가표</h3>
+      <table class="grid"><thead><tr><th style="width:68%">평가 항목</th><th>예 / 아니오</th></tr></thead><tbody>
+       <tr><td>로봇팔의 관절 구조를 이해하였다</td><td>☐ 예　☐ 아니오</td></tr>
+       <tr><td>로봇팔을 안정적으로 조작할 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
+       <tr><td>성공 자세를 각도값으로 기록할 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
+       <tr><td>반복 동작을 함수로 만들 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
+       <tr><td>버튼/명령으로 자동 동작을 실행할 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
+       <tr><td>활동을 진로와 연결해 설명할 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
+      </tbody></table>
+    </div>
+  </div>
   <div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div>
 </section>
 '''
@@ -208,46 +222,53 @@ body = cover + "".join(render_session(s) for s in sessions) + report
 
 CSS = '''
 * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-@page { size: A4; margin: 12mm 11mm; }
-body { font-family: "NanumSquare","NanumGothic",sans-serif; color:#222; margin:0; font-size:11px; line-height:1.45; }
-.page { page-break-after: always; }
-.page:last-child { page-break-after: auto; }
+@page { size: A4; margin: 11mm 11mm; }
+html, body { margin:0; }
+body { font-family: "NanumSquare","NanumGothic",sans-serif; color:#222; font-size:12pt; line-height:1.4; }
+
+/* 한 페이지를 인쇄영역 높이에 맞춰 꽉 채운다 (A4 297mm - 상하 여백 22mm) */
+.page { height:275mm; display:flex; flex-direction:column; overflow:hidden; page-break-after:always; }
+.page:last-child { page-break-after:auto; }
+.content { flex:1 1 auto; display:flex; flex-direction:column; min-height:0; }
 
 /* 헤더 */
-.hd { display:flex; align-items:stretch; gap:10px; margin-bottom:9px; }
-.badge { flex:0 0 auto; width:52px; background:linear-gradient(135deg,#1f6feb,#0b3d91); color:#fff;
-  border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  font-size:26px; font-weight:800; line-height:1; }
-.badge span { font-size:10px; font-weight:600; margin-top:2px; }
-.hdtxt { flex:1 1 auto; border-bottom:3px solid #1f6feb; padding-bottom:5px; }
-.hdtxt h2 { margin:0 0 3px; font-size:18px; color:#0b3d91; }
-.goal { font-size:11px; color:#333; }
-.goal b { color:#1f6feb; margin-right:4px; }
+.hd { display:flex; align-items:stretch; gap:11px; margin-bottom:10px; flex:0 0 auto; }
+.badge { flex:0 0 auto; width:62px; background:linear-gradient(135deg,#1f6feb,#0b3d91); color:#fff;
+  border-radius:13px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  font-size:32pt; font-weight:800; line-height:1; }
+.badge span { font-size:11pt; font-weight:600; margin-top:3px; }
+.hdtxt { flex:1 1 auto; border-bottom:3px solid #1f6feb; padding-bottom:6px; }
+.hdtxt h2 { margin:0 0 4px; font-size:21pt; color:#0b3d91; }
+.goal { font-size:12pt; color:#333; }
+.goal b { color:#1f6feb; margin-right:5px; }
 .codechip { flex:0 0 auto; align-self:flex-start; background:#eef4ff; color:#1f4e9b;
-  border:1px solid #c7dbff; border-radius:20px; padding:3px 10px; font-size:9.5px; font-weight:700; }
+  border:1px solid #c7dbff; border-radius:20px; padding:4px 12px; font-size:10.5pt; font-weight:700; }
 .hd.report .hdtxt { border-color:#c0392b; }
 .hd.report h2 { color:#c0392b; }
 
 /* 미션 박스 */
-.mission { background:#fff5ec; border:1.5px solid #f4a261; border-left:6px solid #e76f23;
-  border-radius:8px; padding:8px 11px; font-size:11px; margin-bottom:11px; }
-.mtag { font-weight:800; color:#c45911; margin-right:6px; }
+.mission { background:#fff5ec; border:1.5px solid #f4a261; border-left:7px solid #e76f23;
+  border-radius:9px; padding:10px 13px; font-size:12pt; margin-bottom:12px; flex:0 0 auto; }
+.mtag { font-weight:800; color:#c45911; margin-right:7px; white-space:nowrap; }
+
+/* 표 블록 — flex-grow(행 수 비례)로 세로 공간을 나눠 입력칸을 크게 */
+.block { display:flex; flex-direction:column; min-height:0; margin-bottom:9px; }
+.block:last-child { margin-bottom:0; }
 
 /* 섹션 제목 */
-.sec { font-size:12px; color:#1f4e9b; margin:11px 0 5px; font-weight:800;
-  border-left:5px solid #1f6feb; padding-left:7px; }
+.sec { font-size:15pt; color:#1f4e9b; margin:0 0 6px; font-weight:800;
+  border-left:6px solid #1f6feb; padding-left:9px; flex:0 0 auto; }
 
-/* 표 */
-table.grid { width:100%; border-collapse:collapse; margin-bottom:4px; }
-table.grid th, table.grid td { border:1px solid #b9c4d4; padding:5px 6px; font-size:10px; vertical-align:middle; }
-table.grid th { background:#dde8fb; color:#163a78; font-weight:700; text-align:center; }
-table.grid td { height:26px; }
-table.grid tbody td:first-child { background:#f5f8ff; }
+/* 표 — 블록 높이를 꽉 채워 행이 늘어나도록 */
+table.grid { width:100%; height:100%; border-collapse:collapse; }
+table.grid th, table.grid td { border:1px solid #b9c4d4; padding:6px 8px; font-size:12pt; vertical-align:top; }
+table.grid th { background:#dde8fb; color:#163a78; font-weight:700; text-align:center; vertical-align:middle; }
+table.grid tbody td:first-child { background:#f5f8ff; font-weight:600; }
 
-.foot { text-align:center; color:#9aa6b6; font-size:8.5px; margin-top:10px; letter-spacing:.3px; }
+.foot { text-align:center; color:#9aa6b6; font-size:9pt; margin-top:8px; letter-spacing:.3px; flex:0 0 auto; }
 
 /* 표지 */
-.cover { display:flex; align-items:center; justify-content:center; height:265mm; }
+.cover { display:flex; align-items:center; justify-content:center; }
 .coverwrap { text-align:center; width:100%; }
 .kicker { letter-spacing:5px; color:#1f6feb; font-weight:800; font-size:12px; margin-bottom:14px; }
 .cover h1 { font-size:46px; color:#0b3d91; margin:0 0 14px; line-height:1.18; }
