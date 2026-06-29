@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<title>로봇팔 학습활동지</title><style>
+* { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+@page { size: A4; margin: 12mm 11mm; }
+body { font-family: "NanumSquare","NanumGothic",sans-serif; color:#222; margin:0; font-size:11px; line-height:1.45; }
+.page { page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+
+/* 헤더 */
+.hd { display:flex; align-items:stretch; gap:10px; margin-bottom:9px; }
+.badge { flex:0 0 auto; width:52px; background:linear-gradient(135deg,#1f6feb,#0b3d91); color:#fff;
+  border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  font-size:26px; font-weight:800; line-height:1; }
+.badge span { font-size:10px; font-weight:600; margin-top:2px; }
+.hdtxt { flex:1 1 auto; border-bottom:3px solid #1f6feb; padding-bottom:5px; }
+.hdtxt h2 { margin:0 0 3px; font-size:18px; color:#0b3d91; }
+.goal { font-size:11px; color:#333; }
+.goal b { color:#1f6feb; margin-right:4px; }
+.codechip { flex:0 0 auto; align-self:flex-start; background:#eef4ff; color:#1f4e9b;
+  border:1px solid #c7dbff; border-radius:20px; padding:3px 10px; font-size:9.5px; font-weight:700; }
+.hd.report .hdtxt { border-color:#c0392b; }
+.hd.report h2 { color:#c0392b; }
+
+/* 미션 박스 */
+.mission { background:#fff5ec; border:1.5px solid #f4a261; border-left:6px solid #e76f23;
+  border-radius:8px; padding:8px 11px; font-size:11px; margin-bottom:11px; }
+.mtag { font-weight:800; color:#c45911; margin-right:6px; }
+
+/* 섹션 제목 */
+.sec { font-size:12px; color:#1f4e9b; margin:11px 0 5px; font-weight:800;
+  border-left:5px solid #1f6feb; padding-left:7px; }
+
+/* 표 */
+table.grid { width:100%; border-collapse:collapse; margin-bottom:4px; }
+table.grid th, table.grid td { border:1px solid #b9c4d4; padding:5px 6px; font-size:10px; vertical-align:middle; }
+table.grid th { background:#dde8fb; color:#163a78; font-weight:700; text-align:center; }
+table.grid td { height:26px; }
+table.grid tbody td:first-child { background:#f5f8ff; }
+
+.foot { text-align:center; color:#9aa6b6; font-size:8.5px; margin-top:10px; letter-spacing:.3px; }
+
+/* 표지 */
+.cover { display:flex; align-items:center; justify-content:center; height:265mm; }
+.coverwrap { text-align:center; width:100%; }
+.kicker { letter-spacing:5px; color:#1f6feb; font-weight:800; font-size:12px; margin-bottom:14px; }
+.cover h1 { font-size:46px; color:#0b3d91; margin:0 0 14px; line-height:1.18; }
+.cover h1 span { color:#e76f23; }
+.subtitle { font-size:14px; color:#555; margin-bottom:30px; }
+table.info { margin:0 auto 26px; border-collapse:collapse; width:80%; }
+table.info td { border:1px solid #b9c4d4; height:34px; font-size:12px; padding:4px 10px; }
+table.info td.k { background:#dde8fb; color:#163a78; font-weight:700; text-align:center; width:18%; }
+.hwbox { width:80%; margin:0 auto 22px; text-align:left; background:#f3f8ff; border:1px solid #c7dbff;
+  border-radius:10px; padding:12px 18px; font-size:12px; }
+.hwbox b { color:#1f4e9b; }
+.hwbox ul { margin:6px 0 0; padding-left:18px; }
+.hwbox li { margin:2px 0; }
+.legend { color:#666; font-size:11.5px; }
+</style></head>
+<body>
+<section class="page cover">
+  <div class="coverwrap">
+    <div class="kicker">ARDUINO 6-DOF ROBOT ARM</div>
+    <h1>아두이노 6자유도 로봇팔<br><span>학습활동지</span></h1>
+    <div class="subtitle">6자유도 로봇팔로 배우는 스마트 자동화 미션 · 전 12차시</div>
+    <table class="info">
+      <tr><td class="k">이　　름</td><td></td><td class="k">팀　　명</td><td></td></tr>
+      <tr><td class="k">학번 / 반</td><td></td><td class="k">로봇팔 번호</td><td></td></tr>
+    </table>
+    <div class="hwbox">
+      <b>하드웨어 기준</b>
+      <ul>
+        <li>그리퍼(6번 서보) : 열림 <b>0°</b> / 닫힘 <b>90°</b></li>
+        <li>1~5번 서보 : 중심 <b>90°</b> (가동 0~180°)</li>
+        <li>조이스틱 SW핀 → 디지털 <b>7번 + GND</b> 버튼 추가 (자동 실행)</li>
+      </ul>
+    </div>
+    <div class="legend">🤖 수동조작 &nbsp;·&nbsp; 💻 코드 &nbsp;·&nbsp; 🏆 도전·경쟁 미션</div>
+  </div>
+</section>
+
+    <section class="page">
+      <div class="hd">
+        <div class="badge">1<span>차시</span></div>
+        <div class="hdtxt"><h2>로봇팔 깨우기</h2>
+          <div class="goal"><b>학습목표</b> 로봇팔을 조립·배선 점검하고, 조이스틱으로 자유롭게 조작해 본다.</div></div>
+        <div class="codechip">💻 01_joystick_control.ino</div>
+      </div>
+      <div class="mission"><span class="mtag">🏆 도전 미션</span> 전원을 켜고 조이스틱만으로 30초 안에 그리퍼로 &#x27;목표 지점&#x27;을 터치하라! (선생님이 정한 컵·스티커 등)</div>
+    <h3 class="sec">1. 로봇팔 관절 매핑표 (조작하며 채우기)</h3><table class="grid"><thead><tr><th>서보 번호</th><th>연결 핀</th><th>움직이는 부위</th><th>움직임 설명</th><th>확인</th></tr></thead><tbody><tr><td>1번 서보</td><td></td><td></td><td></td><td>☐</td></tr><tr><td>2번 서보</td><td></td><td></td><td></td><td>☐</td></tr><tr><td>3번 서보</td><td></td><td></td><td></td><td>☐</td></tr><tr><td>4번 서보</td><td></td><td></td><td></td><td>☐</td></tr><tr><td>5번 서보</td><td></td><td></td><td></td><td>☐</td></tr><tr><td>6번 서보</td><td></td><td></td><td></td><td>☐</td></tr></tbody></table><h3 class="sec">2. 워밍업 게임 기록</h3><table class="grid"><thead><tr><th>시도</th><th>성공까지 걸린 시간</th><th>가장 어려웠던 점</th></tr></thead><tbody><tr><td>1차</td><td></td><td></td></tr><tr><td>2차</td><td></td><td></td></tr><tr><td>3차</td><td></td><td></td></tr></tbody></table><h3 class="sec">✏️ 오늘의 정리</h3><table class="grid"><thead><tr><th>질문</th><th>나의 답변</th></tr></thead><tbody><tr><td>자동차 로봇과 로봇팔의 가장 큰 차이는 무엇인가?</td><td></td></tr><tr><td>로봇팔에서 서보모터가 중요한 이유는 무엇인가?</td><td></td></tr><tr><td>GND(접지) 연결이 중요한 이유는 무엇인가?</td><td></td></tr></tbody></table><div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div></section>
+    <section class="page">
+      <div class="hd">
+        <div class="badge">2<span>차시</span></div>
+        <div class="hdtxt"><h2>코드 해부 — 코드 탐정</h2>
+          <div class="goal"><b>학습목표</b> 샘플 코드의 구조(setup/loop)·핀·각도·조건문을 찾고, 값을 바꿔 동작 변화를 관찰한다.</div></div>
+        <div class="codechip">💻 01_joystick_control.ino</div>
+      </div>
+      <div class="mission"><span class="mtag">🏆 도전 미션</span> 코드의 숫자를 일부러 바꿔 무슨 일이 일어나는지 알아내라! (예: delay 줄이기, MAX 줄이기, PIN 바꾸기)</div>
+    <h3 class="sec">1. 코드 해석표 (코드에서 값 찾기)</h3><table class="grid"><thead><tr><th>코드 요소</th><th>코드에서 찾은 값</th><th>의미(내 말로)</th></tr></thead><tbody><tr><td>서보모터 개수</td><td></td><td></td></tr><tr><td>서보 핀 번호</td><td></td><td></td></tr><tr><td>조이스틱 입력 핀</td><td></td><td></td></tr><tr><td>초기 각도값</td><td></td><td></td></tr><tr><td>최소/최대 각도</td><td></td><td></td></tr><tr><td>조이스틱 기준값(612/412)</td><td></td><td></td></tr></tbody></table><h3 class="sec">2. 코드 탐정 실험 — 바꾸고 관찰하기</h3><table class="grid"><thead><tr><th>바꾼 부분</th><th>원래 값 → 바꾼 값</th><th>로봇팔에 생긴 변화</th></tr></thead><tbody><tr><td>delay()</td><td></td><td></td></tr><tr><td>MAX 각도</td><td></td><td></td></tr><tr><td>PIN(핀 번호)</td><td></td><td></td></tr></tbody></table><h3 class="sec">✏️ 오늘의 정리</h3><table class="grid"><thead><tr><th>질문</th><th>나의 답변</th></tr></thead><tbody><tr><td>핀 번호를 잘못 쓰면 어떤 문제가 생길까?</td><td></td></tr><tr><td>612와 412 사이를 &#x27;멈춤&#x27;으로 둔 이유는 무엇일까?</td><td></td></tr><tr><td>최소·최대 각도 제한이 필요한 이유는 무엇인가?</td><td></td></tr></tbody></table><div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div></section>
+    <section class="page">
+      <div class="hd">
+        <div class="badge">3<span>차시</span></div>
+        <div class="hdtxt"><h2>조이스틱 마스터</h2>
+          <div class="goal"><b>학습목표</b> 조이스틱 정밀 조작 능력을 기르고, 안정적으로 움직이는 방법을 찾는다.</div></div>
+        <div class="codechip">💻 01_joystick_control.ino</div>
+      </div>
+      <div class="mission"><span class="mtag">🏆 도전 미션</span> [택1] ① 블록 타워 가장 높이 쌓기  ② 컵 옮기기 타임어택 — 팀 최고기록에 도전!</div>
+    <h3 class="sec">1. 정밀 조작 도전 기록</h3><table class="grid"><thead><tr><th>시도</th><th>기록(높이/시간)</th><th>실패 원인</th><th>개선 아이디어</th></tr></thead><tbody><tr><td>1차</td><td></td><td></td><td></td></tr><tr><td>2차</td><td></td><td></td><td></td></tr><tr><td>3차</td><td></td><td></td><td></td></tr></tbody></table><h3 class="sec">2. 움직임 관찰</h3><table class="grid"><thead><tr><th>관찰 항목</th><th>기록</th></tr></thead><tbody><tr><td>가장 조작하기 쉬운 관절</td><td></td></tr><tr><td>가장 어려운 관절</td><td></td></tr><tr><td>팔이 흔들렸던 상황</td><td></td></tr><tr><td>안정적으로 움직이는 나만의 요령</td><td></td></tr></tbody></table><h3 class="sec">✏️ 오늘의 정리</h3><table class="grid"><thead><tr><th>질문</th><th>나의 답변</th></tr></thead><tbody><tr><td>로봇팔을 한 번에 크게 움직이면 어떤 문제가 생길까?</td><td></td></tr><tr><td>정밀 제어가 필요한 이유는 무엇인가?</td><td></td></tr></tbody></table><div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div></section>
+    <section class="page">
+      <div class="hd">
+        <div class="badge">4<span>차시</span></div>
+        <div class="hdtxt"><h2>홈 포지션 &amp; 안전</h2>
+          <div class="goal"><b>학습목표</b> 안정적인 기본 자세(홈 포지션)를 찾아 초기 각도값을 수정한다.</div></div>
+        <div class="codechip">💻 01 (INITANGLE 값 수정)</div>
+      </div>
+      <div class="mission"><span class="mtag">🏆 도전 미션</span> 1mm 챌린지 — 펜 끝을 매번 &#x27;같은 점&#x27;에 닿게 하라. 5번 중 몇 번이나 같은 자리에 닿는가?</div>
+    <h3 class="sec">1. 홈 포지션 각도표</h3><table class="grid"><thead><tr><th>서보 번호</th><th>기존 초기값</th><th>수정한 초기값</th><th>수정 이유</th></tr></thead><tbody><tr><td>1번 서보</td><td></td><td></td><td></td></tr><tr><td>2번 서보</td><td></td><td></td><td></td></tr><tr><td>3번 서보</td><td></td><td></td><td></td></tr><tr><td>4번 서보</td><td></td><td></td><td></td></tr><tr><td>5번 서보</td><td></td><td></td><td></td></tr><tr><td>6번 서보</td><td></td><td></td><td></td></tr></tbody></table><h3 class="sec">2. 안정성 점검</h3><table class="grid"><thead><tr><th>점검 항목</th><th>예/아니오</th><th>설명</th></tr></thead><tbody><tr><td>전원을 켰을 때 갑자기 크게 움직이지 않는다</td><td>☐ 예  ☐ 아니오</td><td></td></tr><tr><td>그리퍼가 바닥에 닿지 않는다</td><td>☐ 예  ☐ 아니오</td><td></td></tr><tr><td>팔이 너무 앞으로 기울지 않는다</td><td>☐ 예  ☐ 아니오</td><td></td></tr><tr><td>다시 실행해도 같은 자세로 온다</td><td>☐ 예  ☐ 아니오</td><td></td></tr></tbody></table><h3 class="sec">✏️ 오늘의 정리</h3><table class="grid"><thead><tr><th>질문</th><th>나의 답변</th></tr></thead><tbody><tr><td>홈 포지션이 필요한 이유는 무엇인가?</td><td></td></tr><tr><td>내가 수정한 각도값 중 가장 중요한 값은 무엇인가?</td><td></td></tr><tr><td>안전한 로봇팔 제어를 위해 주의할 점은 무엇인가?</td><td></td></tr></tbody></table><div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div></section>
+    <section class="page">
+      <div class="hd">
+        <div class="badge">5<span>차시</span></div>
+        <div class="hdtxt"><h2>그리퍼 장인</h2>
+          <div class="goal"><b>학습목표</b> 그리퍼 각도를 조절해 다양한 물체를 안정적으로(부드럽게) 집는다.</div></div>
+        <div class="codechip">💻 01_joystick_control.ino</div>
+      </div>
+      <div class="mission"><span class="mtag">🏆 도전 미션</span> 깨지기 쉬운 화물 운반 — 마시멜로/종이컵을 터뜨리지 않고 옮겨라! (그리퍼: 열림 0° / 닫힘 90°) 가장 적은 힘으로 집은 팀 승!</div>
+    <h3 class="sec">1. 물체별 집기 실험 기록표</h3><table class="grid"><thead><tr><th>물체</th><th>열린 각도</th><th>닫힌 각도</th><th>성공 여부</th><th>실패 원인</th></tr></thead><tbody><tr><td>스펀지 큐브</td><td></td><td></td><td>☐ 성공  ☐ 실패</td><td></td></tr><tr><td>종이컵</td><td></td><td></td><td>☐ 성공  ☐ 실패</td><td></td></tr><tr><td>마시멜로</td><td></td><td></td><td>☐ 성공  ☐ 실패</td><td></td></tr><tr><td>둥근 물체</td><td></td><td></td><td>☐ 성공  ☐ 실패</td><td></td></tr></tbody></table><h3 class="sec">2. 가장 쉬운/어려운 물체</h3><table class="grid"><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>가장 잘 집힌 물체</td><td></td></tr><tr><td>이유</td><td></td></tr><tr><td>가장 어려운 물체</td><td></td></tr><tr><td>이유</td><td></td></tr></tbody></table><h3 class="sec">✏️ 오늘의 정리</h3><table class="grid"><thead><tr><th>질문</th><th>나의 답변</th></tr></thead><tbody><tr><td>그리퍼 각도를 너무 작게/크게 하면 어떤 문제가 생기는가?</td><td></td></tr><tr><td>로봇팔이 물체를 집을 때 고려해야 할 점은 무엇인가?</td><td></td></tr></tbody></table><div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div></section>
+    <section class="page">
+      <div class="hd">
+        <div class="badge">6<span>차시</span></div>
+        <div class="hdtxt"><h2>로봇과 대화하기 (Serial)</h2>
+          <div class="goal"><b>학습목표</b> 코드에 Serial을 추가해 현재 각도를 화면으로 읽고, 멋진 자세를 각도값으로 캡처한다.</div></div>
+        <div class="codechip">💻 02_serial_record.ino</div>
+      </div>
+      <div class="mission"><span class="mtag">🏆 도전 미션</span> 자세 사진사 — 멋진 포즈를 잡고 시리얼 모니터에 &#x27;p&#x27;를 입력해 각도값을 캡처하라. 친구와 값을 교환해 똑같이 재현해 보기!</div>
+    <h3 class="sec">1. 캡처한 자세 기록 ( p 입력으로 출력된 값 )</h3><table class="grid"><thead><tr><th>자세 이름</th><th>1번</th><th>2번</th><th>3번</th><th>4번</th><th>5번</th><th>6번(그리퍼)</th></tr></thead><tbody><tr><td>예) 인사 자세</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table><h3 class="sec">2. 친구 자세 재현 결과</h3><table class="grid"><thead><tr><th>받은 자세</th><th>재현 성공?</th><th>달랐던 점</th></tr></thead><tbody><tr><td></td><td>☐ 성공  ☐ 실패</td><td></td></tr></tbody></table><h3 class="sec">✏️ 오늘의 정리</h3><table class="grid"><thead><tr><th>질문</th><th>나의 답변</th></tr></thead><tbody><tr><td>로봇의 움직임을 &#x27;숫자(각도)&#x27;로 기록한다는 것은 어떤 의미인가?</td><td></td></tr><tr><td>Serial(시리얼)이 없으면 왜 각도값을 기록하기 어려운가?</td><td></td></tr></tbody></table><div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div></section>
+    <section class="page">
+      <div class="hd">
+        <div class="badge">7<span>차시</span></div>
+        <div class="hdtxt"><h2>Pick &amp; Place 작전</h2>
+          <div class="goal"><b>학습목표</b> 물체를 A→B로 옮기는 작업 순서를 설계하고 수동으로 수행한다.</div></div>
+        <div class="codechip">💻 02_serial_record.ino</div>
+      </div>
+      <div class="mission"><span class="mtag">🏆 도전 미션</span> 택배 분류 타임어택 — A구역 물체를 B구역으로! 작업 순서를 먼저 설계하고 가장 빠르고 정확하게.</div>
+    <h3 class="sec">1. 작업 순서 설계표</h3><table class="grid"><thead><tr><th>순서</th><th>동작</th><th>주의할 점</th></tr></thead><tbody><tr><td>1</td><td></td><td></td></tr><tr><td>2</td><td></td><td></td></tr><tr><td>3</td><td></td><td></td></tr><tr><td>4</td><td></td><td></td></tr><tr><td>5</td><td></td><td></td></tr><tr><td>6</td><td></td><td></td></tr></tbody></table><h3 class="sec">2. 수행 기록</h3><table class="grid"><thead><tr><th>시도</th><th>걸린 시간</th><th>성공 여부</th><th>개선점</th></tr></thead><tbody><tr><td>1차</td><td></td><td>☐ 성공  ☐ 실패</td><td></td></tr><tr><td>2차</td><td></td><td>☐ 성공  ☐ 실패</td><td></td></tr></tbody></table><h3 class="sec">✏️ 오늘의 정리</h3><table class="grid"><thead><tr><th>질문</th><th>나의 답변</th></tr></thead><tbody><tr><td>작업을 순서대로 나누는 것이 왜 중요한가?</td><td></td></tr><tr><td>사람이 하던 분류를 로봇이 하면 무엇이 좋아지는가?</td><td></td></tr></tbody></table><div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div></section>
+    <section class="page">
+      <div class="hd">
+        <div class="badge">8<span>차시</span></div>
+        <div class="hdtxt"><h2>자세 레시피 북</h2>
+          <div class="goal"><b>학습목표</b> 성공한 자세들을 각도값으로 기록·정리해, 자동화에 쓸 &#x27;포즈 카드&#x27;를 만든다.</div></div>
+        <div class="codechip">💻 02_serial_record.ino</div>
+      </div>
+      <div class="mission"><span class="mtag">🏆 도전 미션</span> HOME·PICK·PLACE 포즈 카드를 완성하라. 이 값이 다음 시간 &#x27;자동화&#x27;의 재료가 된다!</div>
+    <h3 class="sec">1. 포즈 카드 (자동화에 넣을 핵심 자세)</h3><table class="grid"><thead><tr><th>포즈 이름</th><th>1번</th><th>2번</th><th>3번</th><th>4번</th><th>5번</th><th>6번</th></tr></thead><tbody><tr><td>HOME (기본)</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>PICK_READY (집기 직전)</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>PICK (집는 위치)</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>PLACE_READY (놓기 직전)</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>PLACE (놓는 위치)</td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table><h3 class="sec">2. 점검</h3><table class="grid"><thead><tr><th>점검 항목</th><th>예/아니오</th></tr></thead><tbody><tr><td>같은 값을 다시 입력하면 비슷한 자세가 재현된다</td><td>☐ 예  ☐ 아니오</td></tr><tr><td>불필요한(중복) 자세를 제외했다</td><td>☐ 예  ☐ 아니오</td></tr></tbody></table><h3 class="sec">✏️ 오늘의 정리</h3><table class="grid"><thead><tr><th>질문</th><th>나의 답변</th></tr></thead><tbody><tr><td>각도값을 다시 입력했을 때 같은 동작이 나와야 하는 이유는?</td><td></td></tr><tr><td>기록한 자세 중 가장 중요한 자세는 무엇이고 왜인가?</td><td></td></tr></tbody></table><div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div></section>
+    <section class="page">
+      <div class="hd">
+        <div class="badge">9<span>차시</span></div>
+        <div class="hdtxt"><h2>함수 만들기</h2>
+          <div class="goal"><b>학습목표</b> 반복되는 로봇팔 동작을 함수로 만들고, 호출해서 실행한다.</div></div>
+        <div class="codechip">💻 03_functions_button.ino</div>
+      </div>
+      <div class="mission"><span class="mtag">🏆 도전 미션</span> 내 함수 만들기 — gripperOpen()/gripperClose()부터 만들고, goHome()과 나만의 동작 함수(예: wave())까지 완성하라!</div>
+    <h3 class="sec">1. 함수 설계표</h3><table class="grid"><thead><tr><th>함수 이름</th><th>하는 일</th><th>사용한 명령/값</th></tr></thead><tbody><tr><td>gripperOpen()</td><td>그리퍼 열기</td><td></td></tr><tr><td>gripperClose()</td><td>그리퍼 닫기</td><td></td></tr><tr><td>goHome()</td><td>홈 자세로 이동</td><td></td></tr><tr><td>내가 만든 함수 (          )</td><td></td><td></td></tr></tbody></table><h3 class="sec">2. 함수 전/후 비교</h3><table class="grid"><thead><tr><th>구분</th><th>코드가 어떻게 달라졌나</th></tr></thead><tbody><tr><td>함수 없이 직접 쓸 때(복붙)</td><td></td></tr><tr><td>함수로 만든 뒤</td><td></td></tr></tbody></table><h3 class="sec">✏️ 오늘의 정리</h3><table class="grid"><thead><tr><th>질문</th><th>나의 답변</th></tr></thead><tbody><tr><td>함수를 쓰면 무엇이 편리해지는가?</td><td></td></tr><tr><td>매개변수(괄호 안 값)를 받는 함수의 장점은 무엇인가?</td><td></td></tr></tbody></table><div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div></section>
+    <section class="page">
+      <div class="hd">
+        <div class="badge">10<span>차시</span></div>
+        <div class="hdtxt"><h2>자동 Pick &amp; Place</h2>
+          <div class="goal"><b>학습목표</b> 기록한 포즈와 함수를 활용해, 버튼(또는 명령) 한 번으로 자동 동작을 실행한다.</div></div>
+        <div class="codechip">💻 03_functions_button.ino</div>
+      </div>
+      <div class="mission"><span class="mtag">🏆 도전 미션</span> 원클릭 공장 — 버튼(조이스틱 SW, 디지털 7번)을 누르면 집기→옮기기→놓기가 자동으로! 10번 중 몇 번 성공하나?</div>
+    <h3 class="sec">1. 자동화 동작 흐름도 (함수 호출 순서)</h3><table class="grid"><thead><tr><th>순서</th><th>호출한 함수</th><th>목표 포즈</th></tr></thead><tbody><tr><td>1</td><td></td><td></td></tr><tr><td>2</td><td></td><td></td></tr><tr><td>3</td><td></td><td></td></tr><tr><td>4</td><td></td><td></td></tr><tr><td>5</td><td></td><td></td></tr><tr><td>6</td><td></td><td></td></tr><tr><td>7</td><td></td><td></td></tr></tbody></table><h3 class="sec">2. 자동화 성공률 테스트</h3><table class="grid"><thead><tr><th>시도 묶음</th><th>성공/시도</th><th>주된 실패 원인</th><th>조정한 값</th></tr></thead><tbody><tr><td>1~10회</td><td>      / 10</td><td></td><td></td></tr><tr><td>11~20회</td><td>      / 10</td><td></td><td></td></tr></tbody></table><h3 class="sec">✏️ 오늘의 정리</h3><table class="grid"><thead><tr><th>질문</th><th>나의 답변</th></tr></thead><tbody><tr><td>수동 조작과 자동 실행의 차이는 무엇인가?</td><td></td></tr><tr><td>자동 동작이 실패할 때, 코드에서 어떤 값을 조정해야 하나?</td><td></td></tr></tbody></table><div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div></section>
+    <section class="page">
+      <div class="hd">
+        <div class="badge">11<span>차시</span></div>
+        <div class="hdtxt"><h2>최종 미션 설계 &amp; 튜닝</h2>
+          <div class="goal"><b>학습목표</b> 팀별 미니 챌린지를 직접 설계하고, 반복 테스트로 성공률을 높인다.</div></div>
+        <div class="codechip">💻 03_functions_button.ino</div>
+      </div>
+      <div class="mission"><span class="mtag">🏆 도전 미션</span> 우리 팀 미션을 설계하라! (예: 색깔 분류, 컵 피라미드, 도미노, 캘리그래피, 미니 농구…) 수동+자동을 섞어도 좋다.</div>
+    <h3 class="sec">1. 최종 미션 설계표</h3><table class="grid"><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>미션 이름</td><td></td></tr><tr><td>목표(성공 기준)</td><td></td></tr><tr><td>사용 물체/소품</td><td></td></tr><tr><td>수동/자동 구성</td><td></td></tr><tr><td>예상 어려움</td><td></td></tr></tbody></table><h3 class="sec">2. 튜닝 기록</h3><table class="grid"><thead><tr><th>테스트</th><th>성공률</th><th>바꾼 값</th><th>결과</th></tr></thead><tbody><tr><td>1차</td><td></td><td></td><td></td></tr><tr><td>2차</td><td></td><td></td><td></td></tr><tr><td>3차</td><td></td><td></td><td></td></tr></tbody></table><h3 class="sec">✏️ 오늘의 정리</h3><table class="grid"><thead><tr><th>질문</th><th>나의 답변</th></tr></thead><tbody><tr><td>성공률을 높이기 위해 가장 효과적이었던 조정은 무엇인가?</td><td></td></tr><tr><td>우리 미션을 실제 산업현장과 연결하면 어떤 사례와 닮았는가?</td><td></td></tr></tbody></table><div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div></section>
+    <section class="page">
+      <div class="hd">
+        <div class="badge">12<span>차시</span></div>
+        <div class="hdtxt"><h2>데모데이 &amp; 진로</h2>
+          <div class="goal"><b>학습목표</b> 최종 미션을 시연하고, 활동 경험을 로봇·자동화 진로와 연결해 발표한다.</div></div>
+        <div class="codechip">💻 03_functions_button.ino</div>
+      </div>
+      <div class="mission"><span class="mtag">🏆 도전 미션</span> 데모데이! 다른 팀 앞에서 미션을 시연하고, 우리 로봇팔의 &#x27;직업&#x27;을 상상해 발표하라.</div>
+    <h3 class="sec">1. 최종 미션 결과 기록</h3><table class="grid"><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>미션 이름</td><td></td></tr><tr><td>최종 성공률</td><td></td></tr><tr><td>가장 자랑스러운 점</td><td></td></tr><tr><td>다음에 개선할 점</td><td></td></tr></tbody></table><h3 class="sec">2. 진로 연결 발표 준비</h3><table class="grid"><thead><tr><th>질문</th><th>우리 팀 답변</th></tr></thead><tbody><tr><td>이 로봇팔과 닮은 직업/산업은?</td><td></td></tr><tr><td>오늘 배운 것 중 진로에 쓸 수 있는 것은?</td><td></td></tr><tr><td>더 만들어보고 싶은 자동화는?</td><td></td></tr></tbody></table><h3 class="sec">✏️ 오늘의 정리</h3><table class="grid"><thead><tr><th>질문</th><th>나의 답변</th></tr></thead><tbody><tr><td>로봇 자동화가 늘어나면 우리 생활은 어떻게 바뀔까?</td><td></td></tr><tr><td>이번 수업에서 새로 알게 된 가장 중요한 것은 무엇인가?</td><td></td></tr></tbody></table><div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div></section>
+<section class="page">
+  <div class="hd report"><div class="hdtxt"><h2>최종 미션 보고서 & 자기평가</h2>
+   <div class="goal"><b>제출</b> 11~12차시 마무리에 작성하여 제출</div></div></div>
+  <h3 class="sec">1. 미션 보고서</h3>
+  <table class="grid"><tbody>
+    <tr><th style="width:18%">팀명</th><td></td><th style="width:18%">작성일</th><td></td></tr>
+    <tr><th>사용 부품</th><td colspan="3">로봇팔, 아두이노, 조이스틱, 서보모터(6), 그리퍼</td></tr>
+    <tr><th>대표 미션</th><td colspan="3"></td></tr>
+    <tr><th>동작 순서</th><td colspan="3" style="height:70px"></td></tr>
+    <tr><th>핵심 각도값</th><td colspan="3" style="height:55px"></td></tr>
+  </tbody></table>
+  <h3 class="sec">2. 자기평가표</h3>
+  <table class="grid"><thead><tr><th style="width:70%">평가 항목</th><th>예 / 아니오</th></tr></thead><tbody>
+   <tr><td>로봇팔의 관절 구조를 이해하였다</td><td>☐ 예　☐ 아니오</td></tr>
+   <tr><td>로봇팔을 안정적으로 조작할 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
+   <tr><td>성공 자세를 각도값으로 기록할 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
+   <tr><td>반복 동작을 함수로 만들 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
+   <tr><td>버튼/명령으로 자동 동작을 실행할 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
+   <tr><td>활동을 진로와 연결해 설명할 수 있다</td><td>☐ 예　☐ 아니오</td></tr>
+  </tbody></table>
+  <div class="foot">아두이노 6자유도 로봇팔 · 스마트 자동화 미션</div>
+</section>
+</body></html>
