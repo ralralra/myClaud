@@ -5,6 +5,18 @@
 > 코드는 언제나 **GPIO 번호** 기준이에요. 이 표(또는 배포된 포트-핀맵 카드)를 항상 옆에 두세요.
 >
 > 실물 사진·핀맵 이미지: [`../images/`](../images/) 폴더 (`wemosD1R32 pinmap.jpg`)
+> **고릴라 실드를 꽂았을 때의 포트별 GPIO 변환 그림(= 포트-핀맵 카드)**:
+> [`gorilla_shield_x_d1r32_pinmap.png`](../images/gorilla_shield_x_d1r32_pinmap.png) ([SVG 원본](../images/gorilla_shield_x_d1r32_pinmap.svg))
+
+## 고릴라 실드 포트 ↔ GPIO 변환 그림
+
+![고릴라 실드 × D1 R32 핀맵](../images/gorilla_shield_x_d1r32_pinmap.png)
+
+- 노란 칸 = **코드에서 쓰는 ESP32 GPIO 번호**, (괄호) = 실드에 인쇄된 우노 라벨
+- `*` 입력 전용(ADC1 — WiFi와 같이 써도 안전) · `†` ADC2(GPIO 2·4 — WiFi 켜면 아날로그 불가)
+- `‡` RX0·TX0(GPIO 3·1 — USB 시리얼과 공유, 사용 비권장) · `—` A6 없음
+- ⚠ I2C 포트의 21(SDA)·22(SCL)은 실드가 우노 R3 상단 SDA·SCL 핀을 쓰는 경우예요.
+  만약 실드가 아날로그 A4·A5 라인만 쓴다면 D1 R32에서는 GPIO 36·39(입력 전용)가 되어 **I2C가 동작하지 않으니**, LCD가 안 되면 이 배선부터 확인!
 
 ## 아날로그 (Analog) 헤더
 
