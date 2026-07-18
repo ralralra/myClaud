@@ -3,12 +3,12 @@
 상품에 붙은 **RFID 태그를 한 개씩 찍어서 가격을 합산**하고, 판매·재고를 자동으로 관리하는 무인 매점입니다.
 
 > 🧭 **보드 안내**: 이 프로젝트는 **Wemos D1 R32** 기준입니다.
-> - 처음 세팅: [`docs/setup_wemos_d1_r32.md`](../docs/setup_wemos_d1_r32.md) · 핀맵: [`docs/pinmap_wemos_d1_r32.md`](../docs/pinmap_wemos_d1_r32.md)
+> - 처음 세팅: [`01_docs/setup_wemos_d1_r32.md`](../01_docs/setup_wemos_d1_r32.md) · 핀맵: [`01_docs/pinmap_wemos_d1_r32.md`](../01_docs/pinmap_wemos_d1_r32.md)
 > - RC522의 SPI 배선(SS=GPIO5·SCK=18·MOSI=23·MISO=19)은 D1 R32의 **D10~D13 자리**라 코드 그대로 호환돼요.
 >
 > ⚠ **고릴라셀 DSL 세트에는 RFID 리더가 없어요!** 키트만으로 진행하는 팀은 **우회 전략**을 쓰세요:
 > **RFID → 웹 버튼 판매 + 무게센서로 실물 재고 감지** — 우회는 미완성이 아니라 설계 전략!
-> 자세한 방법: [5회차 — 우회 전략](../sessions/05_team_project_planning/README.md) · [6회차 — 매점팀 핵심 시나리오](../sessions/06_core_implementation/README.md)
+> 자세한 방법: [5회차 — 우회 전략](../02_sessions/05_team_project_planning/README.md) · [6회차 — 매점팀 핵심 시나리오](../02_sessions/06_core_implementation/README.md)
 
 ## 무엇을 만드나
 
@@ -44,6 +44,6 @@ Arduino IDE → `Sketch` → `Include Library` → `Manage Libraries` → **"MFR
 ## 문서
 - [`docs/wiring_and_setup.md`](docs/wiring_and_setup.md) — RC522 배선, 라이브러리, 카드 종류
 
-> 우산 대여(`umbrella/`)도 같은 RFID + 기록 구조예요. 이 프로젝트를 하면 그건 훨씬 빨라집니다.
+> 우산 대여(`06_umbrella/`)도 같은 RFID + 기록 구조예요. 이 프로젝트를 하면 그건 훨씬 빨라집니다.
 
 시작 → [`step1_read_card/README.md`](step1_read_card/README.md)

@@ -2,7 +2,7 @@
 
 > 2회차에 손으로 쓰던 HTML·CSS·JS를 AI가 대신 써 줘요 — **우리는 읽고 고칠 줄 알아요!**
 > 이 문서 하나로: **New App 만들기 → 프롬프트 샘플 → 다듬기 → 링크 공유 → 모두의 폰에 설치**까지.
-> 수업 흐름 속 위치: [4회차 3교시](../sessions/04_cloud_expansion/README.md) · [5회차 3~4교시](../sessions/05_team_project_planning/README.md)
+> 수업 흐름 속 위치: [4회차 3교시](../02_sessions/04_cloud_expansion/README.md) · [5회차 3~4교시](../02_sessions/05_team_project_planning/README.md)
 
 ---
 
@@ -81,7 +81,7 @@
 | 화면 다듬기 | "온도 카드를 더 크게" / "제목을 [1팀] 모니터로" — **한 번에 하나씩!** |
 | 기능 빼기 | "로그인 기능은 빼줘" — 범위 지키기는 여기서도 계속! |
 
-> ⚠ 이름 일치 주의: `action`·파라미터 철자는 Apps Script 분기·시트와 **완전히 같아야** 해요 → [4회차 '이름 대조표'](../sessions/04_cloud_expansion/README.md)
+> ⚠ 이름 일치 주의: `action`·파라미터 철자는 Apps Script 분기·시트와 **완전히 같아야** 해요 → [4회차 '이름 대조표'](../02_sessions/04_cloud_expansion/README.md)
 > ⚠ URL 붙여넣기 전 끝이 **`/exec`** 인지 확인 (`/dev`는 동작 안 함)
 
 ## 3. 생성 후 — AI는 초안, 검토는 사람

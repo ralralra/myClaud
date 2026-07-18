@@ -115,7 +115,7 @@
 
 > ❌ 나쁜 프롬프트: "매점 앱 이쁘게" — 모호하게 시키면 모호한 결과. **스케치의 모든 요소를 문장에 담자.**
 > 팀별 프롬프트 예시 원문: [`worksheets/프롬프트_예시.md`](worksheets/프롬프트_예시.md)
-> AI Studio(New App) 사용법 + 폰 설치(PWA) 전체 가이드: [`docs/ai_studio_webapp_guide.md`](../../docs/ai_studio_webapp_guide.md)
+> AI Studio(New App) 사용법 + 폰 설치(PWA) 전체 가이드: [`01_docs/ai_studio_webapp_guide.md`](../../01_docs/ai_studio_webapp_guide.md)
 
 ### 진행 순서
 

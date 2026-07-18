@@ -15,8 +15,8 @@
 - **실제 돈 안 씀** — 가상 포인트로 "결제 흐름"만 체험 (기획서 원칙)
 
 > 🧭 **보드 안내**: 이 프로젝트는 **Wemos D1 R32** 기준입니다. 추가 부품이 없어 보드만 바꾸면 그대로 동작해요.
-> - 처음 세팅: [`docs/setup_wemos_d1_r32.md`](../docs/setup_wemos_d1_r32.md)
-> - 고릴라셀 확장 아이디어: **LCD 셀로 주문번호 표시 + 소리센서 활용** → [6회차 — 키오스크팀 핵심 시나리오](../sessions/06_core_implementation/README.md)
+> - 처음 세팅: [`01_docs/setup_wemos_d1_r32.md`](../01_docs/setup_wemos_d1_r32.md)
+> - 고릴라셀 확장 아이디어: **LCD 셀로 주문번호 표시 + 소리센서 활용** → [6회차 — 키오스크팀 핵심 시나리오](../02_sessions/06_core_implementation/README.md)
 
 ## 단계 안내
 
@@ -34,8 +34,8 @@
 - 폰 또는 태블릿 (키오스크 화면용 — 태블릿이 더 키오스크답습니다)
 
 ## 매점 프로젝트와의 관계
-- 매점(`store/`) = RFID로 **계산원 없는 셀프 계산**
-- 키오스크(`kiosk/`) = 화면으로 **상품 선택 + 모의결제**
+- 매점(`05_store/`) = RFID로 **계산원 없는 셀프 계산**
+- 키오스크(`07_kiosk/`) = 화면으로 **상품 선택 + 모의결제**
 - 데이터 구조(상품·판매로그)가 비슷해서 한 팀이 묶어서 하기 좋아요
 
 시작 → [`step1_menu_browser/README.md`](step1_menu_browser/README.md)

@@ -1,6 +1,6 @@
 # 키오스크 설정 (Wemos D1 R32)
 
-> 보드 처음 세팅(드라이버·IDE·보드 패키지): [`docs/setup_wemos_d1_r32.md`](../../docs/setup_wemos_d1_r32.md)
+> 보드 처음 세팅(드라이버·IDE·보드 패키지): [`01_docs/setup_wemos_d1_r32.md`](../../01_docs/setup_wemos_d1_r32.md)
 
 ## 회로 — 없음!
 Wemos D1 R32 + USB 케이블만 있으면 됩니다. 추가 부품·배선 없음.
@@ -22,4 +22,4 @@ Wemos D1 R32 + USB 케이블만 있으면 됩니다. 추가 부품·배선 없�
   업로드 시 `Tools → Erase All Flash Before Sketch Upload: Enabled` 로 한 번 지우면 시작 포인트(10000)로 리셋됩니다.
 
 ## 문제 해결
-웹 접속/Brownout 등은 출석 프로젝트의 [`attendance/docs/troubleshooting.md`](../../attendance/docs/troubleshooting.md) 와 동일합니다.
+웹 접속/Brownout 등은 출석 프로젝트의 [`04_attendance/docs/troubleshooting.md`](../../04_attendance/docs/troubleshooting.md) 와 동일합니다.

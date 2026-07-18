@@ -27,7 +27,7 @@
 - [ ] 포트-핀맵 카드 (배포)
 
 > ⚠ 실드 결합 시: USB 포트 방향을 맞추고, 핀이 휘지 않게 **수직으로 천천히** 끼워요.
-> 세팅이 처음이라면 → [`docs/setup_wemos_d1_r32.md`](../../docs/setup_wemos_d1_r32.md)
+> 세팅이 처음이라면 → [`01_docs/setup_wemos_d1_r32.md`](../../01_docs/setup_wemos_d1_r32.md)
 
 ---
 
@@ -195,7 +195,7 @@ I2C 방식: 선 2가닥(SDA·SCL)으로 통신하는 똑똑한 디스플레이. 
 - `analogRead`: 밝기의 '정도'를 0(어두움)~4095(밝음) 숫자로
 - 손으로 센서를 가려 봐요 — 숫자가 뚝 떨어져요!
 
-> 🔑 왜 A2~A5 위치일까? **WiFi를 켜면 일부 핀(ADC2)의 아날로그 읽기가 멈추기 때문** — 3회차에 체감하게 돼요. → [`docs/pinmap_wemos_d1_r32.md`](../../docs/pinmap_wemos_d1_r32.md)
+> 🔑 왜 A2~A5 위치일까? **WiFi를 켜면 일부 핀(ADC2)의 아날로그 읽기가 멈추기 때문** — 3회차에 체감하게 돼요. → [`01_docs/pinmap_wemos_d1_r32.md`](../../01_docs/pinmap_wemos_d1_r32.md)
 
 ### 🎯 종합 미션 ③ 카운트다운 타이머
 

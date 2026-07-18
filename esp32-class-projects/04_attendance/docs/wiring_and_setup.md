@@ -1,8 +1,8 @@
 # 보드 설정 & 업로드 방법 (Wemos D1 R32)
 
 > 처음부터 자세한 세팅(드라이버·IDE·보드 패키지)은
-> **[공통 세팅 가이드 → `docs/setup_wemos_d1_r32.md`](../../docs/setup_wemos_d1_r32.md)** 를 먼저 보세요.
-> 핀맵은 [`docs/pinmap_wemos_d1_r32.md`](../../docs/pinmap_wemos_d1_r32.md) 참고.
+> **[공통 세팅 가이드 → `01_docs/setup_wemos_d1_r32.md`](../../01_docs/setup_wemos_d1_r32.md)** 를 먼저 보세요.
+> 핀맵은 [`01_docs/pinmap_wemos_d1_r32.md`](../../01_docs/pinmap_wemos_d1_r32.md) 참고.
 
 ## 회로 — 없음!
 
@@ -19,11 +19,11 @@
 | 업로드 | — | **그냥 Upload 클릭** (대부분 자동) |
 
 → 포트(COM)가 안 보이면 십중팔구 **CH340 드라이버** 문제입니다.
-설치 방법: [공통 세팅 가이드 1번 항목](../../docs/setup_wemos_d1_r32.md#1-ch340-드라이버-설치-최초-1회)
+설치 방법: [공통 세팅 가이드 1번 항목](../../01_docs/setup_wemos_d1_r32.md#1-ch340-드라이버-설치-최초-1회)
 
 ## Arduino IDE 설정
 
-1. esp32 보드 패키지 설치 — [공통 세팅 가이드](../../docs/setup_wemos_d1_r32.md) 참고
+1. esp32 보드 패키지 설치 — [공통 세팅 가이드](../../01_docs/setup_wemos_d1_r32.md) 참고
 2. `Tools` → `Board` → `ESP32 Arduino` → **ESP32 Dev Module** (목록에 WEMOS D1 R32가 있으면 그것도 OK)
 3. `Tools` → `Port` → 보드가 잡힌 COM/tty 선택 (뽑았다 꽂아서 새로 생긴 번호!)
 4. `Tools` → `Upload Speed` → **115200** (안정적)
@@ -55,4 +55,4 @@ D1 R32  ──(와이파이 'ESP32-Attend' 송출)──  학생 폰이 이 와�
 
 - 학생 폰은 이 와이파이에 붙는 동안 **인터넷이 안 됨** (정상)
 - 폰이 "인터넷 없음, 계속 연결할까요?" 물으면 **"계속 연결"** 선택
-- AP 모드 원리 수업: [3회차 — ESP32 웹서버](../../sessions/03_esp32_webserver/README.md)
+- AP 모드 원리 수업: [3회차 — ESP32 웹서버](../../02_sessions/03_esp32_webserver/README.md)

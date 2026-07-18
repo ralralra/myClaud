@@ -144,7 +144,7 @@ AP 모드(WiFi 만들기) → **Station 모드(WiFi 접속하기)**로 전환
 ### 따라하기 ⑦ AI Studio — 화면을 '생성'해요
 
 2회차에 손으로 쓰던 HTML·CSS·JS를 AI가 대신 써 줘요 — **우리는 읽고 고칠 줄 알아요!**
-📖 전체 가이드(New App → 프롬프트 샘플 → 폰 설치): [`docs/ai_studio_webapp_guide.md`](../../docs/ai_studio_webapp_guide.md)
+📖 전체 가이드(New App → 프롬프트 샘플 → 폰 설치): [`01_docs/ai_studio_webapp_guide.md`](../../01_docs/ai_studio_webapp_guide.md)
 
 1. `aistudio.google.com` 접속 → **Build** → **New App**(새 앱 만들기) 선택 (팀 구글 계정)
 2. 프롬프트 입력 — 구체적으로! → [`code/05_ai_studio_prompt.md`](code/05_ai_studio_prompt.md)

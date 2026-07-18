@@ -5,8 +5,8 @@
 앱 설치도, 인터넷도, 추가 부품도 필요 없음
 
 > 🧭 **보드 안내**: 이 프로젝트는 **Wemos D1 R32** 기준입니다. 추가 부품이 없어 보드만 바꾸면 그대로 동작해요.
-> - 처음 세팅: [`docs/setup_wemos_d1_r32.md`](../docs/setup_wemos_d1_r32.md)
-> - 고릴라셀 확장 아이디어: **웹 QR 체크인 + 홀센서로 문 열림 감지** → [6회차 — 출석팀 핵심 시나리오](../sessions/06_core_implementation/README.md)
+> - 처음 세팅: [`01_docs/setup_wemos_d1_r32.md`](../01_docs/setup_wemos_d1_r32.md)
+> - 고릴라셀 확장 아이디어: **웹 QR 체크인 + 홀센서로 문 열림 감지** → [6회차 — 출석팀 핵심 시나리오](../02_sessions/06_core_implementation/README.md)
 
 ## 무엇을 만드나
 
