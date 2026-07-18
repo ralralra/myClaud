@@ -1,57 +1,89 @@
-# ESP32 교육용 프로젝트 모음
+# 웹 기반 IoT 메이커 교육 — ESP32 × 고릴라셀 DSL
 
-고등학교 프로젝트 수업용 ESP32 실습 모음입니다.
-모든 프로젝트는 **학생이 한 발씩 디딜 수 있게** 같은 순서로 설계되어 있습니다.
+고등학교 프로젝트 수업용 실습 자료 모음입니다.
+**Wemos D1 R32 (ESP32)** + **고릴라 실드 + 고릴라셀 DSL 세트(센서 16종)** 기준, **7회차(회당 4교시)** 과정이에요.
 
-## 핵심 교육 원칙 — "눈으로 본 다음 옮긴다"
+> 🔁 **보드 변경 안내**: 이 과정은 ESP32 DevKit → **Wemos D1 R32**로 보드가 바뀌었습니다.
+> 우노 모양이라 고릴라 실드가 그대로 결합되고, WiFi 내장 ESP32라 기존 코드 대부분이 호환돼요.
+> **세팅부터 다시**: [`docs/setup_wemos_d1_r32.md`](docs/setup_wemos_d1_r32.md) · 핀맵: [`docs/pinmap_wemos_d1_r32.md`](docs/pinmap_wemos_d1_r32.md)
 
-학생들이 가장 많이 막히는 지점은 *"코드가 보드 안에서 어떻게 도는지 안 보여서"* 입니다.
-그래서 이 수업은 **보이는 것부터** 만듭니다.
+## 수업 설계 — 기초를 차근차근, 그다음 팀 응용
 
 ```
-1단계. 웹페이지를 PC 브라우저에서 먼저 만든다  → 눈으로 확인 ✅
-2단계. 버튼 누르면 동작하게 한다              → 눈으로 확인 ✅
-3단계. 저장이 되게 한다 (브라우저 안에)        → 눈으로 확인 ✅
+[기초 다지기 — 전원 공통 실습]
+1회차  LED·LCD·첫 센서          →  카운트다운 타이머
+2회차  센서 입력 + HTML·CSS·JS  →  접근 경보기 · 내 리모컨 웹페이지
+3회차  ESP32 웹서버 (AP 모드)   →  내 손안의 리모컨
+4회차  클라우드 (시트·Apps Script·AI Studio) → 교실 환경 모니터 = 공통 뼈대 템플릿!
             │
-            │  "이제 이걸 ESP32로 옮기자"
+            │  "배운 걸 응용해서, 우리 팀이 만들고 싶은 걸 만든다"
             ▼
-4단계. 똑같은 웹페이지를 ESP32가 보여주게 한다  → 폰으로 확인 ✅
-5단계. 버튼 데이터를 ESP32로 보낸다            → 시리얼로 확인 ✅
-6단계. ESP32 안에 저장한다 (전원 꺼도 유지)     → 확인 ✅
-7단계. 선생님이 전체 명단을 본다 / 내려받는다    → 확인 ✅
+[팀 프로젝트 — 5개 중 택1]
+5회차  기획·설계 (명세서·스케치·시트 설계) + 웹앱 1차
+6회차  핵심 기능 구현 (엔드 투 엔드) + 통계 + 기능 동결
+7회차  교차 테스트 · 최종 발표 · 시상
 ```
 
-이 흐름의 장점:
-- **각 단계가 따로 확인 가능** — 어디서 막혔는지 바로 보임
-- **브라우저에서 먼저 성공** — HTML/버튼/저장 개념을 ESP32 없이 익힘
-- **개념 그대로 이동** — "브라우저 저장 → ESP32 저장"처럼 배운 개념이 그대로 연결됨
+- 1~4회차에서 **모든 팀이 같은 기초**(출력→입력→웹→서버→클라우드)를 한 층씩 쌓고,
+- 4회차의 결과물(웹앱 ↔ Apps Script ↔ 시트 ↔ ESP32)이 **모든 팀 프로젝트의 공통 뼈대**가 되고,
+- 5회차부터 팀별로 **하고 싶은 프로젝트를 골라** 그 뼈대에 자기 내용물을 채워요.
 
-> 모든 프로젝트(출석·화분·매점·우산·키오스크)가 이 7단계 틀을 공유합니다.
-> 한 번 익히면 다음 프로젝트는 훨씬 빨라집니다.
+## 회차별 수업 자료 (활동 형식)
 
-## 프로젝트 목록
+| 회차 | 폴더 | 주제 | 산출물 |
+|:---:|---|---|---|
+| 1 | [`sessions/01_esp32_first_meet`](sessions/01_esp32_first_meet/README.md) | ESP32 첫 만남 — LED·LCD·첫 센서 | 카운트다운 타이머 |
+| 2 | [`sessions/02_sensors_and_web`](sessions/02_sensors_and_web/README.md) | 센서 입력 + 웹 기본기 | 접근 경보기 · 리모컨 페이지 |
+| 3 | [`sessions/03_esp32_webserver`](sessions/03_esp32_webserver/README.md) | ESP32 웹서버 — 폰으로 보드 제어 | 내 손안의 리모컨 |
+| 4 | [`sessions/04_cloud_expansion`](sessions/04_cloud_expansion/README.md) | 클라우드 확장 — 시트·Apps Script·AI Studio | 교실 환경 모니터 (뼈대 템플릿) |
+| 5 | [`sessions/05_team_project_planning`](sessions/05_team_project_planning/README.md) | 팀 프로젝트 기획·설계 | 명세서·스케치·시트 설계·웹앱 1차 |
+| 6 | [`sessions/06_core_implementation`](sessions/06_core_implementation/README.md) | 핵심 기능 구현 + 통계 | 엔드 투 엔드 시스템 |
+| 7 | [`sessions/07_final_presentation`](sessions/07_final_presentation/README.md) | 테스트·발표·시연 | 최종 발표 |
 
-| 폴더 | 프로젝트 | 난이도 | 상태 |
-|---|---|---|---|
-| `attendance/` | 스마트 출석 (폰 웹 출석) | ★☆☆ | ✅ 준비됨 |
-| `plant/` | 스마트 화분 (수분센서+급수) | ★☆☆ | ✅ 준비됨 |
-| `store/` | 스마트 매점 (RFID 계산) | ★★☆ | ✅ 준비됨 |
-| `umbrella/` | 스마트 우산 대여 | ★★☆ | ✅ 준비됨 |
-| `kiosk/` | 창업 키오스크 | ★★☆ | ✅ 준비됨 |
+> 원본 참고자료: 각 회차 PPT(`○회차_*.pptx`)는 클로드 프로젝트에서 만든 수업 설계 원본이며,
+> 위 `sessions/` 폴더가 그 내용을 깃허브 활동 형식으로 옮긴 것입니다.
 
-(원본 기획은 `PROJECT_SPEC.md` 참고)
+## 팀 프로젝트 5가지 (5~7회차에서 팀별 택1)
 
-> 🎉 5개 프로젝트 모두 준비 완료. 권장 진행 순서: **화분 → 출석 → 매점/우산 → 키오스크**
+| 폴더 | 프로젝트 | 난이도 | 핵심 셀(고릴라셀) | 우회 전략 |
+|---|---|:---:|---|---|
+| [`plant/`](plant/README.md) | 스마트 화분 | ★☆☆ | 토양습도·빛·DHT·물온도 | 펌프 → 급수 알림 |
+| [`attendance/`](attendance/README.md) | 스마트 출석·안전 | ★☆☆ | 홀(도어)·LCD | NFC → 웹 QR 체크인 |
+| [`store/`](store/README.md) | 스마트 매점 | ★★☆ | LCD·무게·진동 | RFID → 웹 버튼+무게 감지 |
+| [`umbrella/`](umbrella/README.md) | 스마트 우산 대여 | ★★☆ | 초음파·무게·LCD | RFID → 웹 QR+거치 감지 |
+| [`kiosk/`](kiosk/README.md) | 창업 키오스크 | ★★☆ | LCD(주문번호)·소리 | 실결제 → 가상 포인트 |
+
+- 각 프로젝트 폴더는 **단계별(step) 실습** 구조 — 한 단계씩 확인하며 진행
+- **우회는 미완성이 아니라 설계 전략** — 발표에서 가점 요소예요! ([7회차 평가 기준](sessions/07_final_presentation/README.md))
+- 원본 기획: [`PROJECT_SPEC.md`](PROJECT_SPEC.md)
 
 ## 공통 준비물
 
-- **ESP32 DevKit** 보드 (카메라 없는 일반 보드 — USB 직결, 업로드 쉬움)
+- **Wemos D1 R32** 보드 — 우노 모양 + WiFi 내장 ESP32 (⚠ CH340 드라이버 필요)
+- **고릴라 실드 + 고릴라셀 DSL 세트** — 센서 16종 + LCD, 배선 없이 포트에 꽂기만
 - USB 케이블 (데이터 전송용 — 충전 전용 X)
-- Arduino IDE + esp32 보드 패키지 **2.0.17** (`esp32-cam-practice/01_arduino_ide_setup` 참고)
+- Arduino IDE + esp32 보드 패키지 + 블록코딩 도구
+- 팀당 노트북 1대 이상 + 스마트폰
 
-> 💡 ESP32 DevKit은 ESP32-CAM과 달리 **USB가 있고 자동 부팅**됩니다.
-> IO0 버튼 누르고 어쩌고 할 필요 없이 그냥 Upload 누르면 됩니다. 훨씬 쉬워요.
+> 🔑 딱 하나만 기억: **아날로그 센서 셀은 A2~A5 위치 포트에!** (WiFi 충돌 회피)
+> 이유와 전체 핀맵 → [`docs/pinmap_wemos_d1_r32.md`](docs/pinmap_wemos_d1_r32.md)
 
 ## 시작하기
 
-→ `attendance/README.md` 부터 보세요.
+1. 보드 세팅이 처음이라면 → [`docs/setup_wemos_d1_r32.md`](docs/setup_wemos_d1_r32.md)
+2. 수업 진행은 → [`sessions/01_esp32_first_meet`](sessions/01_esp32_first_meet/README.md) 부터 차례대로
+3. 팀 프로젝트 단계(5회차~)에서 → 위 표에서 팀 프로젝트 폴더 선택
+4. 웹앱 화면은 AI Studio(New App)로 생성 → [`docs/ai_studio_webapp_guide.md`](docs/ai_studio_webapp_guide.md)
+   (프롬프트 샘플 + 팀별 교체 가이드 + **모두의 폰에 설치하는 PWA 방법**까지)
+
+## 폴더 구성
+
+```
+esp32-class-projects/
+├── docs/                  ← 보드 세팅·핀맵·AI Studio 웹앱 가이드 (공통)
+├── sessions/              ← 회차별 수업 자료 (1~7회차, 활동 형식)
+├── plant/ attendance/ store/ umbrella/ kiosk/   ← 팀 프로젝트 5종 (단계별 실습)
+├── images/                ← 보드 사진·핀맵 이미지
+├── PROJECT_SPEC.md        ← 원본 기획 명세
+└── ○회차_*.pptx           ← 수업 설계 원본 PPT (참고용)
+```

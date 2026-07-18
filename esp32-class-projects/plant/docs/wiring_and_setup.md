@@ -1,4 +1,9 @@
-# 화분 배선 & 설정
+# 화분 배선 & 설정 (Wemos D1 R32)
+
+> 보드 처음 세팅: [`docs/setup_wemos_d1_r32.md`](../../docs/setup_wemos_d1_r32.md) ·
+> 보드 라벨↔GPIO 대조: [`docs/pinmap_wemos_d1_r32.md`](../../docs/pinmap_wemos_d1_r32.md)
+> D1 R32 보드에서 **GPIO34 = A3 자리**, **GPIO26 = D2 자리**입니다.
+> 고릴라셀 토양습도 셀을 쓰면 배선 없이 **A2~A5 위치 포트**에 꽂기만 하면 돼요.
 
 ## 핀 연결
 

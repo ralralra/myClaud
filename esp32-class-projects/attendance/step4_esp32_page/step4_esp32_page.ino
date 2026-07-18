@@ -5,7 +5,7 @@
   지금까진 PC 브라우저로 .html 파일을 직접 열었지만,
   이제는 ESP32가 그 HTML을 "보내주는" 역할을 한다.
 
-  보드: ESP32 DevKit (ESP32 Dev Module), esp32 core 2.0.17
+  보드: Wemos D1 R32 (툴 → 보드 → ESP32 Dev Module)
   부품: 없음 (USB만 연결)
 */
 

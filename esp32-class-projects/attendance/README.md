@@ -4,6 +4,10 @@
 출석이 기록되는 시스템. 
 앱 설치도, 인터넷도, 추가 부품도 필요 없음
 
+> 🧭 **보드 안내**: 이 프로젝트는 **Wemos D1 R32** 기준입니다. 추가 부품이 없어 보드만 바꾸면 그대로 동작해요.
+> - 처음 세팅: [`docs/setup_wemos_d1_r32.md`](../docs/setup_wemos_d1_r32.md)
+> - 고릴라셀 확장 아이디어: **웹 QR 체크인 + 홀센서로 문 열림 감지** → [6회차 — 출석팀 핵심 시나리오](../sessions/06_core_implementation/README.md)
+
 ## 무엇을 만드나
 
 ```
@@ -13,7 +17,7 @@
                               선생님 폰으로 /list 접속해서 전체 확인·다운로드
 ```
 
-- **부품**: ESP32 DevKit 1개. 끝. (센서·카드 없음)
+- **부품**: Wemos D1 R32 1개. 끝. (센서·카드 없음)
 - **인터넷**: 필요 없음. ESP32가 직접 와이파이를 만들어요(AP 모드)
 - **앱**: 없음. 그냥 브라우저로 접속
 
@@ -39,14 +43,14 @@
 
 ## 준비물 체크
 
-- [ ] ESP32 DevKit + USB 케이블
-- [ ] Arduino IDE + esp32 코어 2.0.17 (`docs/wiring_and_setup.md`)
+- [ ] Wemos D1 R32 + USB 케이블
+- [ ] Arduino IDE + esp32 보드 패키지 ([`docs/wiring_and_setup.md`](docs/wiring_and_setup.md))
 - [ ] 크롬 같은 웹브라우저 (PC)
 - [ ] 스마트폰 (와이파이 되는 것)
 
 ## 문서
 
-- `docs/wiring_and_setup.md` — 보드 설정, 업로드 방법 (DevKit은 쉬움!)
-- `docs/troubleshooting.md` — 폰이 안 붙을 때, 페이지가 안 뜰 때 등
+- [`docs/wiring_and_setup.md`](docs/wiring_and_setup.md) — 보드 설정, 업로드 방법 (D1 R32는 쉬움!)
+- [`docs/troubleshooting.md`](docs/troubleshooting.md) — 폰이 안 붙을 때, 페이지가 안 뜰 때 등
 
 시작 → `step1_webpage/README.md`

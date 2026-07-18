@@ -3,6 +3,13 @@
 토양 수분을 측정해서 **흙이 마르면 자동으로 물을 주는** 화분입니다.
 배선과 코드가 단순하고 결과가 눈앞에서 바로 보여서, **첫 성공 경험용으로 최고**예요.
 
+> 🧭 **보드 안내**: 이 프로젝트는 **Wemos D1 R32** 기준입니다.
+> - 처음 세팅: [`docs/setup_wemos_d1_r32.md`](../docs/setup_wemos_d1_r32.md) · 핀맵: [`docs/pinmap_wemos_d1_r32.md`](../docs/pinmap_wemos_d1_r32.md)
+> - 코드의 GPIO34(센서)·GPIO26(릴레이)는 D1 R32의 **A3·D2 자리**라 그대로 호환돼요.
+> - **고릴라셀 DSL 세트** 사용 시: 토양습도 셀을 **A2~A5 위치 포트**에 꽂으면 배선 끝!
+>   펌프·릴레이가 없다면 **'급수 알림'(LCD·웹 경고)으로 우회**해도 훌륭한 설계예요 — [5회차 우회 전략](../sessions/05_team_project_planning/README.md) 참고.
+> - 수업 흐름: [6회차 — 캘리브레이션·엔드 투 엔드](../sessions/06_core_implementation/README.md)
+
 ## 무엇을 만드나
 
 ```
@@ -26,7 +33,7 @@
 | 4 | `step4_web_dashboard` | 폰으로 수분값 실시간 보기 + 수동 급수 버튼 — 폰 |
 
 ## 준비물
-- ESP32 DevKit + USB 케이블
+- Wemos D1 R32 + USB 케이블
 - **정전용량식(capacitive) 토양 수분 센서** ← 부식 적음, 저항식 말고 이걸로
 - **릴레이 모듈** (1채널, 5V)
 - **소형 워터펌프**(5V 수중펌프) + 실리콘 튜브
@@ -39,6 +46,6 @@
 → 펌프 전원은 **외부 5V**에서 받고, ESP32는 **릴레이로 스위치만** 합니다.
 
 ## 문서
-- `docs/wiring_and_setup.md` — 배선도, 센서 캘리브레이션, 안전
+- [`docs/wiring_and_setup.md`](docs/wiring_and_setup.md) — 배선도, 센서 캘리브레이션, 안전
 
 시작 → `step1_read_sensor/README.md`

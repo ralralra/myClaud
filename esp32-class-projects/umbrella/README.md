@@ -3,6 +3,14 @@
 **누가 어떤 우산을 빌리고 반납했는지**를 RFID로 기록하는 대여 시스템입니다.
 (위치추적 없음 — 도서관 대출과 똑같은 구조)
 
+> 🧭 **보드 안내**: 이 프로젝트는 **Wemos D1 R32** 기준입니다.
+> - 처음 세팅: [`docs/setup_wemos_d1_r32.md`](../docs/setup_wemos_d1_r32.md) · 핀맵: [`docs/pinmap_wemos_d1_r32.md`](../docs/pinmap_wemos_d1_r32.md)
+> - RC522의 SPI 배선은 D1 R32의 **D10~D13 자리**라 코드 그대로 호환돼요.
+>
+> ⚠ **고릴라셀 DSL 세트에는 RFID 리더가 없어요!** 키트만으로 진행하는 팀은 **우회 전략**을 쓰세요:
+> **RFID → 웹 QR로 대여·반납 + 초음파·무게센서로 거치 감지**
+> 자세한 방법: [5회차 — 우회 전략](../sessions/05_team_project_planning/README.md) · [6회차 — 우산팀 핵심 시나리오](../sessions/06_core_implementation/README.md)
+
 ## 무엇을 만드나
 
 ```
@@ -25,12 +33,12 @@
 | 4 | `step4_web_status` | 폰으로 대여 현황·미반납 보기 — 폰 |
 
 ## 준비물
-- ESP32 DevKit + USB
+- Wemos D1 R32 + USB
 - **RC522 RFID 리더**
 - **학생증**(MIFARE Classic) 또는 학생용 카드
 - **우산용 RFID 태그** (우산 수만큼)
 
-> 배선·라이브러리는 매점(`store/`)과 **완전히 동일**합니다. `store/docs/wiring_and_setup.md` 참고.
+> 배선·라이브러리는 매점(`store/`)과 **완전히 동일**합니다. [`store/docs/wiring_and_setup.md`](../store/docs/wiring_and_setup.md) 참고.
 > 매점을 먼저 했다면 이 프로젝트는 금방 끝나요 (같은 RFID 기술 재활용).
 
 ## ⏰ 시각 안내
