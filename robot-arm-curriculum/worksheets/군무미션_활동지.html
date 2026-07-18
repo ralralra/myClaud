@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">
+<title>로봇팔 군무 미션 활동지</title><style>
+* { box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+@page { size:A4; margin:11mm 11mm; }
+html,body { margin:0; }
+body { font-family:"NanumSquare","NanumGothic",sans-serif; color:#222; font-size:12pt; line-height:1.4; }
+.page { height:275mm; display:flex; flex-direction:column; overflow:hidden; page-break-after:always; }
+.page:last-child { page-break-after:auto; }
+.content { flex:1 1 auto; display:flex; flex-direction:column; min-height:0; }
+.hd { display:flex; align-items:stretch; gap:11px; margin-bottom:10px; flex:0 0 auto; }
+.badge { flex:0 0 auto; width:62px; background:linear-gradient(135deg,#7b2ff7,#5b14c5); color:#fff;
+  border-radius:13px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  font-size:26pt; font-weight:800; line-height:1; }
+.badge span { font-size:10pt; font-weight:600; margin-top:3px; }
+.hdtxt { flex:1 1 auto; border-bottom:3px solid #7b2ff7; padding-bottom:6px; }
+.hdtxt h2 { margin:0 0 4px; font-size:21pt; color:#4a148c; }
+.goal { font-size:12pt; color:#333; } .goal b { color:#7b2ff7; margin-right:5px; }
+.mission { background:#fff5ec; border:1.5px solid #f4a261; border-left:7px solid #e76f23;
+  border-radius:9px; padding:10px 13px; font-size:12pt; margin-bottom:12px; flex:0 0 auto; }
+.mtag { font-weight:800; color:#c45911; margin-right:7px; }
+.block { display:flex; flex-direction:column; min-height:0; margin-bottom:9px; }
+.block:last-child { margin-bottom:0; }
+.sec { font-size:15pt; color:#4a148c; margin:0 0 6px; font-weight:800;
+  border-left:6px solid #7b2ff7; padding-left:9px; flex:0 0 auto; }
+table.grid { width:100%; height:100%; border-collapse:collapse; }
+table.grid th, table.grid td { border:1px solid #c4b6dd; padding:6px 8px; font-size:12pt; vertical-align:top; }
+table.grid th { background:#ece3fb; color:#4a148c; font-weight:700; text-align:center; vertical-align:middle; }
+table.grid tbody td:first-child { background:#f7f3ff; font-weight:600; }
+.note { background:#f7f3ff; border:1px solid #d9caf3; border-radius:9px; padding:9px 13px; font-size:12pt; flex:0 0 auto; }
+.foot { text-align:center; color:#a99ec0; font-size:9pt; margin-top:8px; flex:0 0 auto; }
+</style></head>
+<body>
+<section class="page">
+  <div class="hd">
+    <div class="badge">♪<span>군무</span></div>
+    <div class="hdtxt"><h2>로봇팔 군무 미션 — 동작 설계</h2>
+      <div class="goal"><b>학습목표</b> 함수를 나눠 맡아 각자 '동작'을 만들고, 합쳐서 안무를 완성한다.</div></div>
+  </div>
+  <div class="mission"><span class="mtag">🏆 도전 미션</span>
+    팀원이 동작 함수를 하나씩 만들고(<b>moveTimed(포즈, BEAT)</b>), 모든 팀이 같은 박자로 맞춰 군무를 완성하라!</div>
+  <div class="content">
+    <div class="block" style="flex-grow:7"><h3 class="sec">1. 동작 함수 설계표 (학생별로 하나씩 맡기)</h3><table class="grid"><thead><tr><th>담당</th><th>함수 이름</th><th>동작 설명</th><th>사용 포즈(각도 1~5번)</th><th>박자</th></tr></thead><tbody><tr><td>예) A</td><td>waveHand()</td><td>손을 좌우로 흔들기</td><td>{60,90,110,90,60} ↔ {120,90,110,90,120}</td><td>2박</td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+    <div class="block" style="flex-grow:2">
+      <h3 class="sec">2. 동기화 설정</h3>
+      <div class="note">
+        · 한 박자 <b>BEAT = ______ ms</b> &nbsp;(모든 팀이 <b>똑같은 값</b>을 써야 군무가 맞습니다)<br>
+        · 참여 로봇팔 수: <b>______ 대</b> &nbsp;&nbsp; · 전체 안무 길이: <b>______ 박자</b><br>
+        · 시작 방법: &nbsp; ☐ 카운트다운 동시 시작(3·2·1!) &nbsp;&nbsp; ☐ 공통 버튼으로 일제 시작
+      </div>
+    </div>
+  </div>
+  <div class="foot">아두이노 6자유도 로봇팔 · 군무 미션</div>
+</section>
+
+<section class="page">
+  <div class="hd">
+    <div class="badge">♪<span>군무</span></div>
+    <div class="hdtxt"><h2>로봇팔 군무 미션 — 안무 타임라인</h2>
+      <div class="goal"><b>학습목표</b> 동작 함수를 박자에 맞춰 배열하고, 리허설로 군무를 맞춘다.</div></div>
+  </div>
+  <div class="content">
+    <div class="block" style="flex-grow:3"><h3 class="sec">1. 안무 타임라인 (박자 1~8)</h3><table class="grid"><thead><tr><th>박자</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr></thead><tbody><tr><td>동작</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>담당</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+    <div class="block" style="flex-grow:3"><h3 class="sec">　　　　　　　　　 (박자 9~16)</h3><table class="grid"><thead><tr><th>박자</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th></tr></thead><tbody><tr><td>동작</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>담당</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+    <div class="block" style="flex-grow:4"><h3 class="sec">2. 리허설 기록</h3><table class="grid"><thead><tr><th>회차</th><th>박자 정확도</th><th>어긋난 부분</th><th>개선 방법</th></tr></thead><tbody><tr><td>1차</td><td>☐ 잘 맞음  ☐ 보통  ☐ 어긋남</td><td></td><td></td></tr><tr><td>2차</td><td>☐ 잘 맞음  ☐ 보통  ☐ 어긋남</td><td></td><td></td></tr><tr><td>3차</td><td>☐ 잘 맞음  ☐ 보통  ☐ 어긋남</td><td></td><td></td></tr></tbody></table></div>
+    <div class="block" style="flex-grow:3"><h3 class="sec">✏️ 오늘의 정리</h3><table class="grid"><thead><tr><th>질문</th><th>나의 답변</th></tr></thead><tbody><tr><td>박자가 어긋날 때 무엇을 바꾸면 맞출 수 있을까?</td><td></td></tr><tr><td>여러 대를 정확히 동시에 시작하려면 어떻게 해야 할까?</td><td></td></tr></tbody></table></div>
+  </div>
+  <div class="foot">아두이노 6자유도 로봇팔 · 군무 미션</div>
+</section>
+</body></html>
