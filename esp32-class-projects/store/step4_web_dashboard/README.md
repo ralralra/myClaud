@@ -40,7 +40,7 @@ void readStats(int soldCount[], int &grandTotal) {
 
 ## 잘 안 될 때
 - 웹 접속 안 됨 → 출석 트러블슈팅과 동일 (http, IO0+RESET 등)
-- 카드 안 읽힘 → 매점 `docs/wiring_and_setup.md` (3.3V, 배선)
+- 카드 안 읽힘 → 매점 [`docs/wiring_and_setup.md`](../docs/wiring_and_setup.md) (3.3V, 배선)
 - WiFi 켜니 카드가 안 읽힘 → 거의 없음. 그래도면 RC522 배선/전원 확인
 
 ## 배운 것 (매점 전체 정리)

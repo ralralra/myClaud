@@ -14,7 +14,7 @@ if (rfid.PICC_IsNewCardPresent() && rfid.PICC_ReadCardSerial()) {
 ```
 
 ## 준비
-- RC522 배선 (`../docs/wiring_and_setup.md` — SDA=5, RST=27, **3.3V**!)
+- RC522 배선 ([`../docs/wiring_and_setup.md`](../docs/wiring_and_setup.md) — SDA=5, RST=27, **3.3V**!)
 - MFRC522 라이브러리 설치
 
 ## 해보기

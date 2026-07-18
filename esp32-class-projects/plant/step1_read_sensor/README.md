@@ -12,7 +12,7 @@ int raw = analogRead(SOIL_PIN);   // 0 ~ 4095
 
 ## 배선
 센서 AOUT → **GPIO34**, VCC → 3V3, GND → GND
-(자세히는 `../docs/wiring_and_setup.md`)
+(자세히는 [`../docs/wiring_and_setup.md`](../docs/wiring_and_setup.md))
 
 ## 해보기
 1. 배선 후 `step1_read_sensor.ino` 업로드

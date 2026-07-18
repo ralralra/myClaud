@@ -2,7 +2,7 @@
 
 RFID 리더(RC522) 배선·라이브러리는 **매점 프로젝트와 완전히 동일**합니다.
 
-→ **`../../store/docs/wiring_and_setup.md`** 를 그대로 보세요.
+→ **[`../../store/docs/wiring_and_setup.md`](../../store/docs/wiring_and_setup.md)** 를 그대로 보세요.
 
 요약:
 | RC522 | ESP32 |

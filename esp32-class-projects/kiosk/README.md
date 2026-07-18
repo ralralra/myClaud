@@ -38,4 +38,4 @@
 - 키오스크(`kiosk/`) = 화면으로 **상품 선택 + 모의결제**
 - 데이터 구조(상품·판매로그)가 비슷해서 한 팀이 묶어서 하기 좋아요
 
-시작 → `step1_menu_browser/README.md`
+시작 → [`step1_menu_browser/README.md`](step1_menu_browser/README.md)

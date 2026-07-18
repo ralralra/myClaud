@@ -11,7 +11,7 @@
 [ESP32 GPIO26] → 릴레이 IN (신호만)
 [외부 5V] → 릴레이 → 펌프   (실제 전력)
 ```
-배선 자세히는 `../docs/wiring_and_setup.md`
+배선 자세히는 [`../docs/wiring_and_setup.md`](../docs/wiring_and_setup.md)
 
 ## 원리 — 릴레이 = 전자 스위치
 릴레이는 ESP32의 작은 신호로 **큰 전류(펌프)를 켰다 껐다** 하는 스위치예요.

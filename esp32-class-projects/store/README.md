@@ -46,4 +46,4 @@ Arduino IDE → `Sketch` → `Include Library` → `Manage Libraries` → **"MFR
 
 > 우산 대여(`umbrella/`)도 같은 RFID + 기록 구조예요. 이 프로젝트를 하면 그건 훨씬 빨라집니다.
 
-시작 → `step1_read_card/README.md`
+시작 → [`step1_read_card/README.md`](step1_read_card/README.md)

@@ -48,4 +48,4 @@
 ## 문서
 - [`docs/wiring_and_setup.md`](docs/wiring_and_setup.md) — 배선도, 센서 캘리브레이션, 안전
 
-시작 → `step1_read_sensor/README.md`
+시작 → [`step1_read_sensor/README.md`](step1_read_sensor/README.md)

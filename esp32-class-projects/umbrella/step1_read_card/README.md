@@ -4,7 +4,7 @@
 학생증과 우산 태그의 UID를 각각 읽어 적어둔다.
 
 ## 해보기
-1. RC522 배선 (매점과 동일, `../docs/wiring_and_setup.md`)
+1. RC522 배선 (매점과 동일, [`../docs/wiring_and_setup.md`](../docs/wiring_and_setup.md))
 2. `step1_read_card.ino` 업로드 → 시리얼 모니터(115200)
 3. 학생증들과 우산 태그들을 하나씩 대면서 UID 기록
 

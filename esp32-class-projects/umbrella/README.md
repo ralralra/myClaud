@@ -45,4 +45,4 @@
 ESP32는 인터넷(시계)이 없어 정확한 날짜·시각 기록은 RTC 모듈이나 WiFi+NTP가 필요합니다.
 이 프로젝트는 **순서(누가 무엇을 빌렸나/반납했나)** 중심으로 기록합니다.
 
-시작 → `step1_read_card/README.md` (매점 1단계와 동일)
+시작 → [`step1_read_card/README.md`](step1_read_card/README.md) (매점 1단계와 동일)

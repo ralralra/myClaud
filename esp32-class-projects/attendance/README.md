@@ -53,4 +53,4 @@
 - [`docs/wiring_and_setup.md`](docs/wiring_and_setup.md) — 보드 설정, 업로드 방법 (D1 R32는 쉬움!)
 - [`docs/troubleshooting.md`](docs/troubleshooting.md) — 폰이 안 붙을 때, 페이지가 안 뜰 때 등
 
-시작 → `step1_webpage/README.md`
+시작 → [`step1_webpage/README.md`](step1_webpage/README.md)

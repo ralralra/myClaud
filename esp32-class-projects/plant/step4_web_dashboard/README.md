@@ -36,7 +36,7 @@ int raw = analogRead(SOIL_PIN);            // 접속할 때마다 현재 수분�
 - [ ] 마른 상태로 두면 자동 급수도 동작한다 (시리얼 `자동 급수`)
 
 ## 잘 안 될 때
-- 접속 안 됨 → 출석 프로젝트와 동일. `http://` (https X), Brownout이면 IO0+RESET, 자세히는 출석의 `docs/troubleshooting.md`
+- 접속 안 됨 → 출석 프로젝트와 동일. `http://` (https X), Brownout이면 IO0+RESET, 자세히는 출석의 [`docs/troubleshooting.md`](../../attendance/docs/troubleshooting.md)
 - **수분값이 항상 0 또는 4095 고정** → 센서가 GPIO34에 제대로 연결됐는지, ADC1 핀(32~39) 맞는지 확인
 
 ## 직접 바꿔보기
