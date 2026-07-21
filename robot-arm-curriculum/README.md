@@ -7,7 +7,8 @@
 ## 폴더 구성
 - `README.md` — (이 문서) 원본 활동지 검토 + 개선한 12차시 계획 + 미션 메뉴
 - `LESSON_PLAN_6x2h.md` — 진로수업 상세 수업계획안 (6회 × 2시간, 성취형)
-- `slides/` — 수업 진행용 통합 PPT(`로봇팔_수업진행_통합.pptx`)와 생성 스크립트
+- `slides/` — 수업용 PPT(`로봇팔_수업진행_통합.pptx`, `로봇팔_교사용_수업가이드.pptx`)와 생성 스크립트
+- `code/teaching_robotarm.ino` — 초보자용 구획 설명 코드(준비/setup/loop + 함수 만드는 곳)
 - `CODE_GUIDE.md` — 교사용: 코드 구조 해부 & 함수 만드는 법
 - `code/` — 단계별 아두이노 코드 3종
   - `01_joystick_control.ino` (조이스틱 직접제어, 기본)
