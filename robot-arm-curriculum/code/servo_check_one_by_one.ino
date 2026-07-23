@@ -53,13 +53,17 @@ void loop() {
 // ----------------------------------------------------------------------------
 void sweepOne(int i) {
   // 최소 각도 → 최대 각도 (1도씩 증가)
-  for (int a = MINA[i]; a <= MAXA[i]; a++) {
+  for (int a = HOME[i]; a <= MAXA[i]; a++) {
     myservo[i].write(a);
-    delay(15);                    // 숫자를 키우면 더 천천히 움직인다
+    delay(100);                    // 숫자를 키우면 더 천천히 움직인다
   }
   // 최대 각도 → 최소 각도 (1도씩 감소)
   for (int a = MAXA[i]; a >= MINA[i]; a--) {
     myservo[i].write(a);
-    delay(15);
+    delay(100);
+  }
+    for (int a = MINA[i]; a >= HOME[i]; a--) {
+    myservo[i].write(a);
+    delay(100);
   }
 }
