@@ -20,7 +20,6 @@
   - `07_serial_record.ino` (각도값 기록용 Serial 추가)
   - `08_functions_button.ino` (함수 + 자동 Pick & Place)
   - `09_dance.ino` (심화: 로봇팔 군무)
-  - `99_old_joystick_control.ino` (구버전 — 핀 배치가 04번과 다름, 참고용)
 - `worksheets/` — 인쇄용 학습활동지 최종본(`학습활동지_최종본.pdf`)
 
 ---
