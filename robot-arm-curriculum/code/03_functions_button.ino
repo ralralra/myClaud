@@ -44,12 +44,13 @@ void setup() {
   Serial.begin(9600);
   pinMode(BUTTON_PIN, INPUT_PULLUP);   // ★ 버튼 입력(내부 풀업)
 
-  PIN[0] = 3;   MIN[0] = 0; MAX[0] = 180; INITANGLE[0] = 90; ANA[0] = 0;
-  PIN[1] = 2;   MIN[1] = 0; MAX[1] = 180; INITANGLE[1] = 90; ANA[1] = 1;
-  PIN[2] = 9;   MIN[2] = 0; MAX[2] = 180; INITANGLE[2] = 90; ANA[2] = 2;
-  PIN[3] = 8;   MIN[3] = 0; MAX[3] = 180; INITANGLE[3] = 90; ANA[3] = 3;
-  PIN[4] = 4;   MIN[4] = 0; MAX[4] = 180; INITANGLE[4] = 90; ANA[4] = 4;
-  PIN[5] = 5;   MIN[5] = 0; MAX[5] = 90;  INITANGLE[5] = 0;  ANA[5] = 5; // 그리퍼: 0(열림)으로 시작
+  //          핀   최소   최대    시작각   조이스틱
+  PIN[0] = 3;   MIN[0] = 0; MAX[0] = 180; INITANGLE[0] = 90; ANA[0] = 0; // 1번 서보
+  PIN[1] = 2;   MIN[1] = 0; MAX[1] = 180; INITANGLE[1] = 90; ANA[1] = 1; // 2번 서보
+  PIN[2] = 9;   MIN[2] = 0; MAX[2] = 180; INITANGLE[2] = 90; ANA[2] = 2; // 3번 서보
+  PIN[3] = 8;   MIN[3] = 0; MAX[3] = 180; INITANGLE[3] = 90; ANA[3] = 3; // 4번 서보
+  PIN[4] = 4;   MIN[4] = 0; MAX[4] = 180; INITANGLE[4] = 90; ANA[4] = 4; // 5번 서보
+  PIN[5] = 5;   MIN[5] = 0; MAX[5] = 90;  INITANGLE[5] = 0;  ANA[5] = 5; // 6번 그리퍼: 0(열림)으로 시작
 
   for (int i = 0; i < SERVOS; i++) {
     myservo[i].attach(PIN[i]);
