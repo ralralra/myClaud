@@ -15,22 +15,41 @@ def _read(path):
 
 
 def test_code_files_exist():
+    # 수업 순서대로 번호를 붙인 코드가 모두 있는지 확인
     for name in (
-        "01_joystick_control.ino",
-        "02_serial_record.ino",
-        "03_functions_button.ino",
+        "01_servo_single_test.ino",
+        "02_servo_check_one_by_one.ino",
+        "03_joystick_check.ino",
+        "04_basic_joystick_control.ino",
+        "05_safe_start_joystick.ino",
+        "06_teaching_robotarm.ino",
+        "07_serial_record.ino",
+        "08_functions_button.ino",
+        "09_dance.ino",
     ):
         assert os.path.isfile(os.path.join(BASE, "code", name)), name
 
 
+def test_code_headers_are_numbered():
+    # 각 .ino 헤더 주석에 파일명과 같은 번호가 [NN] 형태로 들어 있는지
+    code_dir = os.path.join(BASE, "code")
+    for fname in sorted(os.listdir(code_dir)):
+        if not fname.endswith(".ino"):
+            continue
+        num = fname[:2]
+        with open(os.path.join(code_dir, fname), encoding="utf-8") as f:
+            head = "".join(f.readlines()[:5])
+        assert f"[{num}]" in head, f"{fname} 헤더에 [{num}] 없음"
+
+
 def test_serial_sketch_adds_serial():
-    src = _read("code/02_serial_record.ino")
+    src = _read("code/07_serial_record.ino")
     assert "Serial.begin" in src
     assert "printAngles" in src
 
 
 def test_functions_sketch_has_functions_and_automation():
-    src = _read("code/03_functions_button.ino")
+    src = _read("code/08_functions_button.ino")
     for token in ("void moveTo", "void goHome", "gripperOpen", "autoPickAndPlace"):
         assert token in src, token
 
