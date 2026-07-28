@@ -4,7 +4,7 @@ E = html.escape
 
 # 각 단계: (번호, 영문제목, 한글부제, 파일, 코드줄들, 설명항목들)
 STEPS = [
- ("1", "awake robot Arm", "서보를 하나씩 움직여 어느 관절인지 확인한다", "servo_single_test.ino",
+ ("1", "awake robot Arm", "서보를 하나씩 움직여 어느 관절인지 확인한다", "01_servo_single_test.ino",
   ["#include <Servo.h>",
    "int PIN = 2;            // ★ 이 숫자만 2→3→9→8→4→5 로 바꿔 업로드",
    "Servo myservo;",
@@ -21,7 +21,7 @@ STEPS = [
    "<b>delay(15)</b> : 한 칸 움직일 때마다 잠깐 멈춤 → 숫자를 키우면 더 천천히.",
    "움직이는 서보를 보며 <b>관절 매핑표</b>(핀=관절)를 채운다."]),
 
- ("2", "Code Dissection", "기본 조이스틱 제어 코드를 해석한다", "basic_joystick_control.ino",
+ ("2", "Code Dissection", "기본 조이스틱 제어 코드를 해석한다", "04_basic_joystick_control.ino",
   ["const int SERVOS = 6;                 // 서보 개수",
    "int PIN[SERVOS], MIN[SERVOS], MAX[SERVOS], INITANGLE[SERVOS], ANA[SERVOS];",
    "",
@@ -41,7 +41,7 @@ STEPS = [
    "<b>612 / 412</b> : 조이스틱 값의 경계. 그 사이(가운데)는 '멈춤'.",
    "숫자를 바꿔 보며(코드 탐정) 어떤 값이 무엇을 바꾸는지 확인한다."]),
 
- ("3", "Joystick Master", "정밀 제어의 원리를 이해한다", "basic_joystick_control.ino",
+ ("3", "Joystick Master", "정밀 제어의 원리를 이해한다", "04_basic_joystick_control.ino",
   ["void loop(){",
    "  delay(50);                          // 전체 속도(작을수록 빠름)",
    "  for(int i=0;i<SERVOS;i++){",
@@ -60,7 +60,7 @@ STEPS = [
    "<b>delay(50)</b>을 줄이면 빨라지지만 거칠어진다 → 정밀함과 속도는 트레이드오프.",
    "MIN/MAX가 각도를 벗어나지 못하게 막아 안전을 지킨다."]),
 
- ("4", "Home Position", "전원을 켤 때의 안정 자세를 정한다", "basic_joystick_control.ino",
+ ("4", "Home Position", "전원을 켤 때의 안정 자세를 정한다", "04_basic_joystick_control.ino",
   ["void setup(){",
    "  //         핀  최소 최대  시작각  조이스틱",
    "  PIN[0]=2; MIN[0]=0; MAX[0]=180; INITANGLE[0]=90; ANA[0]=0;",
@@ -77,7 +77,7 @@ STEPS = [
    "그리퍼(6번)는 가동범위가 0~90이라 시작각도 그 안(예: 45)이어야 한다.",
    "홈이 안정적이면 매번 같은 자세에서 작업을 시작할 수 있다."]),
 
- ("5", "gripper craftsman", "그리퍼(손)를 여닫아 물체를 집는다", "03_functions_button.ino",
+ ("5", "gripper craftsman", "그리퍼(손)를 여닫아 물체를 집는다", "08_functions_button.ino",
   ["const int GRIPPER = 5;        // 그리퍼 = 6번 서보(인덱스 5)",
    "const int GRIP_OPEN  = 0;     // 열림 0도",
    "const int GRIP_CLOSE = 90;    // 닫힘 90도",
@@ -89,7 +89,7 @@ STEPS = [
    "무른 물체(마시멜로)는 각도를 조금 덜 닫아 힘을 줄인다.",
    "이렇게 손 제어를 <b>함수</b>로 묶어 두면 다음 단계에서 재사용한다."]),
 
- ("6", "Talking to a Robot", "시리얼로 현재 각도를 읽어 기록한다", "02_serial_record.ino",
+ ("6", "Talking to a Robot", "시리얼로 현재 각도를 읽어 기록한다", "07_serial_record.ino",
   ["void setup(){",
    "  Serial.begin(9600);        // ★ 컴퓨터와 통신 시작",
    "  ...",
@@ -106,7 +106,7 @@ STEPS = [
    "즉 로봇의 자세를 <b>숫자(데이터)</b>로 남기는 것 — 자동화의 재료가 된다.",
    "출력된 각도를 활동지 포즈 카드에 그대로 적는다."]),
 
- ("7", "Pick & Place", "집기→이동→놓기를 순서로 나눈다", "03_functions_button.ino",
+ ("7", "Pick & Place", "집기→이동→놓기를 순서로 나눈다", "08_functions_button.ino",
   ["void moveTo(int target[]){    // 팔(1~5번)을 목표 자세로 부드럽게",
    "  ... 1도씩 target 으로 이동 ...",
    "}",
@@ -121,7 +121,7 @@ STEPS = [
    "순서만 정하면 사람이든 로봇이든 같은 작업을 반복할 수 있다.",
    "이 '순서 설계'가 다음 단계 자동화의 밑그림이 된다."]),
 
- ("8", "Posture Recipe Book", "핵심 자세를 각도 데이터로 저장한다", "03_functions_button.ino",
+ ("8", "Posture Recipe Book", "핵심 자세를 각도 데이터로 저장한다", "08_functions_button.ino",
   ["// 8차시에서 기록한 각도값을 그대로 넣는다",
    "int HOME[SERVOS]        = { 90, 90, 90, 90, 90, 0 };",
    "int PICK_READY[SERVOS]  = { 60,100, 80, 90, 90, 0 };",
@@ -133,7 +133,7 @@ STEPS = [
    "이 포즈 데이터가 자동 동작의 '레시피(재료)'가 된다.",
    "6번(그리퍼) 자리는 moveTo가 무시하고 따로 제어한다."]),
 
- ("9", "Create a function", "반복 동작에 이름을 붙여 함수로 만든다", "03_functions_button.ino",
+ ("9", "Create a function", "반복 동작에 이름을 붙여 함수로 만든다", "08_functions_button.ino",
   ["// 만드는 법:  void 이름(){ 할 일 }   / 쓰는 법:  이름();",
    "void gripperOpen(){ myservo[5].write(0); delay(400); }",
    "void gripperClose(){ myservo[5].write(90); delay(400); }",
@@ -146,7 +146,7 @@ STEPS = [
    "<b>loop() 바깥</b>에 만들고, 어디서든 <b>이름();</b> 한 줄로 부른다.",
    "복붙 대신 함수를 쓰면 코드가 짧아지고 고치기 쉽다."]),
 
- ("10", "Automatic Pick & Place", "함수를 순서대로 불러 자동 실행한다", "03_functions_button.ino",
+ ("10", "Automatic Pick & Place", "함수를 순서대로 불러 자동 실행한다", "08_functions_button.ino",
   ["void autoPickAndPlace(){     // 함수들을 '순서대로' 호출 = 자동화",
    "  gripperOpen();  moveTo(PICK_READY); moveTo(PICK);",
    "  gripperClose(); moveTo(PICK_READY); moveTo(PLACE_READY);",
@@ -183,7 +183,7 @@ STEPS = [
    "'내가 없애고 싶은 반복노동은?'을 코드 아이디어로 발표한다.",
    "활동 전체가 진로 탐색의 근거(포트폴리오)가 된다."]),
 
- ("★", "group dance mission", "동작 함수를 나눠 만들어 군무를 완성한다", "04_dance.ino",
+ ("★", "group dance mission", "동작 함수를 나눠 만들어 군무를 완성한다", "09_dance.ino",
   ["const int BEAT = 700;        // 한 박자(ms) — 모든 팀이 같은 값!",
    "void moveTimed(int t[], int dur){  // 거리와 상관없이 dur(ms)만에 도착",
    "  ... 시간 비율 f 로 보간 이동 ...  // → 어떤 동작도 정확히 한 박자",
