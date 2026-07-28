@@ -5,7 +5,6 @@ CI(pytest)가 수집·통과할 수 있도록, 그리고 자료가 깨지지 않
 쓰지 않고, 파일 존재와 핵심 내용만 확인한다.
 """
 import os
-import zipfile
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -44,11 +43,9 @@ def test_readme_covers_12_sessions():
         assert f"| {n} |" in readme, f"{n}차시 행 누락"
 
 
-def test_worksheet_docx_is_valid():
-    path = os.path.join(BASE, "worksheets", "로봇팔_12차시_학습활동지_개선판.docx")
+def test_worksheet_final_pdf_is_valid():
+    # 최종본 학습활동지(PDF)만 유지된다 — 존재 여부와 PDF 시그니처 확인
+    path = os.path.join(BASE, "worksheets", "학습활동지_최종본.pdf")
     assert os.path.isfile(path)
-    # docx 는 zip 컨테이너 — 핵심 파트가 들어 있는지 확인
-    with zipfile.ZipFile(path) as z:
-        assert "word/document.xml" in z.namelist()
-        doc = z.read("word/document.xml").decode("utf-8", "ignore")
-    assert "12차시" in doc or "12" in doc
+    with open(path, "rb") as f:
+        assert f.read(5).startswith(b"%PDF")
