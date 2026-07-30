@@ -1,0 +1,39 @@
+# ============================================================
+#  Netlify 배포 설정 — speechreaderpro.netlify.app
+# ------------------------------------------------------------
+#  이 파일이 저장소에 있으면 배포 설정이 코드로 관리되어,
+#  저장소 이름이 바뀌거나 다른 저장소로 옮겨도 그대로 따라간다.
+#  (Netlify 대시보드 설정보다 이 파일이 우선한다)
+# ============================================================
+
+[build]
+  # 앱이 들어 있는 폴더 (저장소 루트 기준)
+  base = "speech-reader-pro"
+  # 빌드 명령 — package.json 의 "build": "tsc && vite build"
+  command = "npm run build"
+  # 빌드 결과물 폴더 (base 기준 → speech-reader-pro/dist)
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# ── SPA(단일 페이지 앱) 라우팅 ──
+#  어떤 주소로 들어와도 index.html 을 돌려줘야 새로고침·직접 접속이 깨지지 않는다.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# ── 보안 헤더 ──
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# ── PWA 캐싱 ── 서비스워커는 캐시하지 않아야 업데이트가 즉시 반영된다
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
