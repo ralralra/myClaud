@@ -20,6 +20,7 @@
   - `07_serial_record.ino` (각도값 기록용 Serial 추가)
   - `08_functions_button.ino` (함수 + 자동 Pick & Place)
   - `09_dance.ino` (심화: 로봇팔 군무)
+  - `10_three_buttons.ino` (버튼 3개(13·12·11)로 서로 다른 동작 실행)
 - `worksheets/` — 인쇄용 학습활동지 최종본(`학습활동지_최종본.pdf`)
 
 ---
